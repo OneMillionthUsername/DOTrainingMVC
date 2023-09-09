@@ -32,12 +32,12 @@ namespace DOTrainingMVC.Controllers
         public IActionResult Frage()
         {
             QuestionCounter++;
-            if (!IsRandom) 
+            if (!IsRandom && QuestionNumber <= NumberOfQuestions) 
             {
                 QuestionNumber++; //increment linear question progression
             }
             string viewName = $"Frage{QuestionNumber}";
-            return View(viewName, QuestionCounter);
+            return View(viewName, QuestionNumber);
         }
 
         public IActionResult ValidateAnswers()

@@ -19,7 +19,7 @@ function validateForm(solution) {
 		fieldContainer[fieldName] = document.getElementById(valueName); //get input field
 	}
 
-	for (var i = 0; i < solution.length; i++) { //divided by 2, because we set two vars at the same time
+	for (var i = 0; i < solution.length; i++) {
 		if (valueContainer["param" + i].toLowerCase().trim() !== solution[i].toLowerCase()) {
 			fieldContainer["field" + i].style.backgroundColor = "red";
 			result = false; // Formular wird nicht abgesendet
