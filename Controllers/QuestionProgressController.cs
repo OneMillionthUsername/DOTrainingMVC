@@ -38,13 +38,10 @@ namespace DOTrainingMVC.Controllers
         [HttpPost]
         public IActionResult ValidateAnswers(string param1, string param2, int questionNumber, string returnUrl)
         {
-            Dictionary<string, string> routeValues = new();
             questionNumber++;
-            routeValues.Add("questionNumber", questionNumber.ToString());
-            routeValues.Add("nextPage", "Frage" + questionNumber);
-            routeValues.Add("result", param1 + " * FROM " + param2);
-            routeValues.Add("returnUrl", returnUrl);
-            return View(routeValues);
+            ViewBag.questionNumber = questionNumber;
+            ViewBag.returnUrl = returnUrl;
+            return View();
         }
     }
 }

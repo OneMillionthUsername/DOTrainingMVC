@@ -1,9 +1,6 @@
-﻿@model Dictionary<string,string>
-@{ 
+﻿@{ 
     ViewData["Title"] = "Richtig";
-    //var b weil sonst "true" auf der View ausgegeben wird.
-    var b = @Model.TryGetValue("questionNumber", out string num);
-    int number = int.Parse(num);
+    int number = ViewBag.questionNumber;
     string view = "Frage" + number;
 }
 
