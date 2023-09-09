@@ -1,109 +1,15 @@
-﻿@{
-    ViewData["Title"] = "Frage " + ViewBag.QNumber;
+﻿@model int
+@{
+    ViewData["Title"] = "Frage " + Model;
 }
-@*<h1>Frage 2</h1>*@
+
 <h2>Selektrieren Sie alle Kunden aus Berlin.</h2>
 @*onsubmit = "return func()" das return, verhindert, dass das Formular abgeschickt wird, wenn es false returned.*@
-@using (Html.BeginForm("ValidateAnswers", "QuestionProgress", FormMethod.Post, new { onsubmit = "return validateForm()" }))
+@using (Html.BeginForm("ValidateAnswers", "QuestionProgress", FormMethod.Post, new { onsubmit = "return validateForm(['where', 'like'])" }))
 {
     <div class="form-group">
         <span class="bluespan">SELECT</span> * <span class="bluespan">FROM</span> Customers <br />
         <input type="text" name="param0" id="param0" /> City <input type="text" id="param1" name="param1" /> 'Berlin'
-        <input type="hidden" name="questionNumber" value="@ViewBag.QNumber" />
-        <input type="hidden" name="returnUrl" value="@Html.ViewContext.ExecutingFilePath" />
         <input type="submit" class="btn-sm btn-primary" value="Check" />
     </div>
 }
-
-@*<script language="javascript" type="text/javascript">
-    function validateForm() {
-        //init vars
-        var solution = ['where', 'like'];
-        var varCount = solution.length;
-        var valueContainer = {};
-        var fieldContainer = {};
-        var result = true;
-
-        //create var names/key for values and fields
-        for (var i = 0; i < varCount; i++) {
-            var varName = "param" + i;
-            var fieldName = "field" + i;
-            valueContainer[varName] = document.getElementById(varName).value; //get value
-            fieldContainer[fieldName] = document.getElementById(varName); //get input field
-        }
-
-        //var param1Value = document.getElementById("param1").value;
-        //var param2Value = document.getElementById("param2").value;
-        //var param3Value = document.getElementById("param3").value;
-        //var param4Value = document.getElementById("param4").value;
-        //var param5Value = document.getElementById("param5").value;
-        //var field1 = document.getElementById("param1");
-        //var field2 = document.getElementById("param2");
-        //var field3 = document.getElementById("param3");
-        //var field4 = document.getElementById("param4");
-        //var field5 = document.getElementById("param5");
-
-        for (var i = 0; i < varCount; i++) {
-            if (valueContainer[i].toLowerCase().trim() !== solution[i]) {
-                fieldContainer[i].style.backgroundColor = "red";
-                result = false; // Formular wird nicht abgesendet
-            }
-            else {
-                fieldContainer[i].style.backgroundColor = "green";
-            }
-        }
-        //if (param2Value.toLowerCase().trim() !== "database") {
-        //    field2.style.backgroundColor = "red";
-        //    result = false; // Formular wird nicht abgesendet
-        //} else {
-        //    field2.style.backgroundColor = "green";
-        //}
-        //if (param3Value.toLowerCase().trim() !== "go") {
-        //    field3.style.backgroundColor = "red";
-        //    result = false;
-        //}
-        //else {
-        //    field3.style.backgroundColor = "green";
-        //}
-        // Weitere Validierungslogik hier hinzufügen, falls erforderlich
-        if (result) {
-            return true; // Formular wird abgesendet, wenn die Validierung erfolgreich ist
-        }
-        return false;
-    }
-</script>*@
-
-
-@*<script language="javascript" type="text/javascript">
-        function validateForm() {
-            var param1Value = document.getElementById("param1").value;
-            var param2Value = document.getElementById("param2").value;
-            var field1 = document.getElementById("param1");
-            var field2 = document.getElementById("param2");
-
-            if (param1Value.toLowerCase().trim() !== "where") {
-                field1.style.backgroundColor = "red";
-                if (param2Value.toLowerCase().trim() !== "like") {
-                    field2.style.backgroundColor = "red";
-                }
-                else {
-                    field2.style.backgroundColor = "green";
-                }
-                //alert("Leider falsch.");
-                return false; // Formular wird nicht abgesendet
-            }
-            else {
-                field1.style.backgroundColor = "green";
-            }
-            if (param2Value.toLowerCase().trim() !== "like") {
-                field2.style.backgroundColor = "red";
-                //alert("Leider falsch.");
-                return false; // Formular wird nicht abgesendet
-            }
-            field2.style.backgroundColor = "green";
-
-            // Weitere Validierungslogik hier hinzufügen, falls erforderlich
-
-            return true; // Formular wird abgesendet, wenn die Validierung erfolgreich ist
-        }
-    </script>*@

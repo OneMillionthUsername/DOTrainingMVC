@@ -1,77 +1,15 @@
-﻿@{
-    ViewData["Title"] = "Frage " + ViewBag.QNumber;
+﻿@model int
+@{
+    ViewData["Title"] = "Frage " + Model;
 }
 @*<h1>Frage 3</h1>*@
 <h2>Erstelle eine Datenbank mit dem Namen "Personen"</h2>
 @*onsubmit = "return func()" das return, verhindert, dass das Formular abgeschickt wird, wenn es false returned.*@
-@using (Html.BeginForm("ValidateAnswers", "QuestionProgress", FormMethod.Post, new { onsubmit = "return validateForm()" }))
+@using (Html.BeginForm("ValidateAnswers", "QuestionProgress", FormMethod.Post, new { onsubmit = "return validateForm(['create', 'database', 'go'])" }))
 {
     <div class="form-group">
-        @*<span class="bluespan">SELECT</span> * <span class="bluespan">FROM</span> Customers <br />*@
-        <input type="text" name="param0" id="param0" /> <input type="text" id="param1" name="param1" /> Personen
-                                                        <input type="text" name="param2" id="param2" />
-
-
-        <input type="hidden" name="questionNumber" value="@ViewBag.QNumber" />
-        <input type="hidden" name="returnUrl" value="@Html.ViewContext.ExecutingFilePath" />
+        <input type="text" name="param0" id="param0" /> <input type="text" id="param1" name="param1" /> Personen <br />
+        <input type="text" name="param2" id="param2" />
         <input type="submit" class="btn-sm btn-primary" value="Check" />
     </div>
 }
-
-@*<script language="javascript" type="text/javascript">
-    function validateForm() {
-        //init vars
-        var solution = ['create', 'database', 'go'];
-        var varCount = solution.length;
-        var valueContainer = {};
-        var fieldContainer = {};
-        var result = true;
-
-        //create var names/key for values and fields
-        for (var i = 1; i <= varCount; i++) {
-            var varName = "param" + i;
-            var fieldName = "field" + i;
-            valueContainer[varName] = document.getElementById(varName).value; //get value
-            fieldContainer[fieldName] = document.getElementById(varName); //get input field
-        }
-
-        //var param0Value = document.getElementById("param0").value;
-        //var param1Value = document.getElementById("param1").value;
-        //var param2Value = document.getElementById("param2").value;
-        //var param4Value = document.getElementById("param4").value;
-        //var param5Value = document.getElementById("param5").value;
-        //var field1 = document.getElementById("param0");
-        //var field2 = document.getElementById("param1");
-        //var field3 = document.getElementById("param2");
-        //var field4 = document.getElementById("param4");
-        //var field5 = document.getElementById("param5");
-
-        for (var i = 1; i <= varCount; i++) {
-            if (valueContainer[i].toLowerCase().trim() !== solution[i]) {
-                fieldContainer[i].style.backgroundColor = "red";
-                result = false; // Formular wird nicht abgesendet
-            }
-            else {
-                fieldContainer[i].style.backgroundColor = "green";
-            }
-        }
-        //if (param1Value.toLowerCase().trim() !== "database") {
-        //    field2.style.backgroundColor = "red";
-        //    result = false; // Formular wird nicht abgesendet
-        //} else {
-        //    field2.style.backgroundColor = "green";
-        //}
-        //if (param2Value.toLowerCase().trim() !== "go") {
-        //    field3.style.backgroundColor = "red";
-        //    result = false;
-        //}
-        //else {
-        //    field3.style.backgroundColor = "green";
-        //}
-        // Weitere Validierungslogik hier hinzufügen, falls erforderlich
-        if (result) {
-            return true; // Formular wird abgesendet, wenn die Validierung erfolgreich ist
-        }
-        return false;
-    }
-</script>*@

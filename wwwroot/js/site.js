@@ -4,9 +4,9 @@
 // Write your JavaScript code.
 
 
-function validateForm() {
+function validateForm(solution) {
 	//init vars
-	var solution = ['select', 'customers'];
+	//var solution = ['select', 'customers'];
 	var valueContainer = {};
 	var fieldContainer = {};
 	var result = true;

@@ -8,7 +8,8 @@ namespace DOTrainingMVC.Controllers
 {
     public class QuestionProgressController : Controller
     {
-        public int QuestionNumber { get; set; }
+        public static int QuestionNumber { get; set; }
+
         [HttpGet]
         public IActionResult Welcome()
         {
@@ -17,31 +18,41 @@ namespace DOTrainingMVC.Controllers
         [HttpGet]
         public IActionResult Frage()
         {
-            ViewBag.QNumber = 1;
-            return View();
-        }
-
-        [HttpGet]
-        public IActionResult Frage2(int questionNumber)
-        {
-            ViewBag.QNumber = questionNumber;
-            return View();
-        }
-
-        [HttpGet]
-        public IActionResult Frage3(int questionNumber)
-        {
-            ViewBag.QNumber = questionNumber;
-            return View();
+            QuestionNumber = 1;
+            return View(QuestionNumber);
         }
 
         [HttpPost]
-        public IActionResult ValidateAnswers(string param1, string param2, int questionNumber, string returnUrl)
+        public IActionResult Frage2()
         {
-            questionNumber++;
-            ViewBag.questionNumber = questionNumber;
-            ViewBag.returnUrl = returnUrl;
-            return View();
+            return View(QuestionNumber);
+        }
+
+        [HttpPost]
+        public IActionResult Frage3()
+        {
+            return View(QuestionNumber);
+        }
+        [HttpPost]
+        public IActionResult Frage4()
+        {
+            return View(QuestionNumber);
+        }
+        [HttpPost]
+        public IActionResult Frage5()
+        {
+            return View(QuestionNumber);
+        }
+        [HttpPost]
+        public IActionResult Frage6()
+        {
+            return View(QuestionNumber);
+        }
+        [HttpPost]
+        public IActionResult ValidateAnswers()
+        {
+            QuestionNumber++; //question counter raised
+            return View(QuestionNumber);
         }
     }
 }

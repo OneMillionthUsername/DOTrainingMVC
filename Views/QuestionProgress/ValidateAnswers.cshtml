@@ -1,11 +1,13 @@
-﻿@{ 
+﻿@model int
+@{ 
     ViewData["Title"] = "Richtig";
-    int number = ViewBag.questionNumber;
-    string view = "Frage" + number;
+    string view = "Frage" + Model;
 }
 
 <div class="container-fluid" style="background-color: green; text-decoration: none;">
     <h1>Richtig!</h1>
-    @*<h2><span style="color: blue;">SELECT</span> * <span style="color: blue;"> FROM </span>Customers</h2>*@
+    <form action="/QuestionProgress/@view" method="post">
+        <input type="hidden" name="questionNumber" value="@Model" />
+        <input type="submit" value="Weiter" class="btn btn-primary" />
+    </form>
 </div>
-<a href="/QuestionProgress/@view?questionNumber=@number" class="btn btn-primary">Weiter</a>
