@@ -10,9 +10,9 @@ namespace DOTrainingMVC.Controllers
     public class QuestionProgressController : Controller
     {
         public static int QuestionNumber { get; set; }
-        private static Random Rnd = new Random();
-        //private static int NumberOfQuestions = Directory.EnumerateFiles("~/Views/QuestionProgress/").Where(fileName => fileName.Contains("Frage")).ToList().Count();
+        private static Random Rnd = new Random((int)DateTime.Now.Ticks & 0x0000FFFF);
         
+        //get the count of the views
         private static int NumberOfQuestions = Directory.GetFiles("./Views/QuestionProgress").Where(fileName => fileName.Contains("Frage")).ToArray().Length;
         public static bool IsRandom = false;
 
@@ -24,55 +24,27 @@ namespace DOTrainingMVC.Controllers
         public IActionResult SetRandomQuestions()
         {
             IsRandom = true;
-            QuestionNumber = Rnd.Next(1, NumberOfQuestions + 1); //random question number
-            return RedirectToAction("Frage" + QuestionNumber);
+            QuestionNumber = Rnd.Next(1, NumberOfQuestions + 1); //generate first random question number
+            return RedirectToAction(nameof(Frage));
         }
 
-        public IActionResult Frage1()
+        public IActionResult Frage()
         {
-            if (!IsRandom) //possible bug -> url injection failing IsRandom logic.
+            if (!IsRandom) 
             {
-                QuestionNumber = 1;
+                QuestionNumber++; //increment linear question progression
             }
-            return View(QuestionNumber);
-        }
-
-        public IActionResult Frage2()
-        {
-            return View(QuestionNumber);
-        }
-
-        public IActionResult Frage3()
-        {
-            return View(QuestionNumber);
-        }
-
-        public IActionResult Frage4()
-        {
-            return View(QuestionNumber);
-        }
-
-        public IActionResult Frage5()
-        {
-            return View(QuestionNumber);
-        }
-
-        public IActionResult Frage6()
-        {
-            return View(QuestionNumber);
+            string viewName = $"Frage{QuestionNumber}";
+            return View(viewName);
         }
 
         public IActionResult ValidateAnswers()
         {
             if (IsRandom)
             {
-                QuestionNumber = Rnd.Next(1, NumberOfQuestions + 1); //random question number
+                QuestionNumber = Rnd.Next(1, NumberOfQuestions + 1); //update random question number
             }
-            else
-            {
-                QuestionNumber++; //raise question counter
-            }
-            return View(QuestionNumber);
+            return View();
         }
     }
 }

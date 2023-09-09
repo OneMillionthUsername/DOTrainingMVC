@@ -9,7 +9,9 @@
 @using (Html.BeginForm("ValidateAnswers", "QuestionProgress", FormMethod.Get, new { onsubmit = "return validateForm(['select', 'customers'])", autocomplete = "off" }))
 {
     <div class="form-group">
-        <input type="text" name="param0" id="param0" /> * <span style="color: blue">FROM</span> <input type="text" id="param1" name="param1" />
+        <input type="text" name="param0" id="param0" /> <!--select-->
+        * <span style="color: blue">FROM</span> 
+        <input type="text" id="param1" name="param1" /> <!--customers-->
         <input type="submit" class="btn-sm btn-primary" value="Check" />
     </div>
 }
