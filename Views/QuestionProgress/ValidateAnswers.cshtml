@@ -3,11 +3,12 @@
     ViewData["Title"] = "Richtig";
     string view = "Frage" + Model;
 }
-
 <div class="container-fluid" style="background-color: green; text-decoration: none;">
     <h1>Richtig!</h1>
-    <form action="/QuestionProgress/@view" method="post">
-        <input type="hidden" name="questionNumber" value="@Model" />
-        <input type="submit" value="Weiter" class="btn btn-primary" />
+    <form action="/QuestionProgress/@view" method="get">
+        <input type="submit" id="submitBtn" value="Weiter" class="btn btn-primary" />
     </form>
 </div>
+<script>
+    document.getElementById("submitBtn").focus();
+</script>

@@ -20,7 +20,7 @@ function validateForm(solution) {
 	}
 
 	for (var i = 0; i < solution.length; i++) { //divided by 2, because we set two vars at the same time
-		if (valueContainer["param" + i].toLowerCase().trim() !== solution[i]) {
+		if (valueContainer["param" + i].toLowerCase().trim() !== solution[i].toLowerCase()) {
 			fieldContainer["field" + i].style.backgroundColor = "red";
 			result = false; // Formular wird nicht abgesendet
 		}
@@ -34,4 +34,13 @@ function validateForm(solution) {
 	}
 	return false;
 }
+
+// Event-Listener, der auf das DOMContentLoaded-Ereignis wartet
+document.addEventListener('DOMContentLoaded', function () {
+	// Hier das erste Eingabefeld automatisch fokussieren
+	var firstInput = document.getElementById('param0');
+	if (firstInput) {
+		firstInput.focus();
+	}
+});
 

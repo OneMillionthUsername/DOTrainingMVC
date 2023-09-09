@@ -1,0 +1,21 @@
+﻿@model int
+@{
+    ViewData["Title"] = "Frage " + Model;
+}
+
+<h2>
+    Erstelle eine Tabelle "Land", mit den Attributen: <br />
+    LandId(int, identity(1,1), not null) <br />
+    LandName (nvarchar50) <br />
+</h2>
+@*onsubmit = "return func()" das return, verhindert, dass das Formular abgeschickt wird, wenn es false returned.*@
+@using (Html.BeginForm("ValidateAnswers", "QuestionProgress", FormMethod.Get, new { onsubmit = "return validateForm(['create', 'table', 'int', 'identity(1,1)', '50'])" }))
+{
+<div class="form-group">
+    <input type="text" name="param0" id="param0" /> <input type="text" id="param1" name="param1" /> [dbo].[Land] ( <br />
+    [LandId] <input type="text" name="param2" id="param2" /> <input type="text" name="param3" id="param3" /> NOT NULL, <br />
+    [LandName] [nvarchar]( <input type="text" name="param4" id="param4" /> ) NULL )<br />
+    GO <br />
+    <input type="submit" class="btn-sm btn-primary" value="Check" />
+</div>
+}
