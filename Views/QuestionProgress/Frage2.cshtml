@@ -7,10 +7,12 @@
 @*onsubmit = "return func()" das return, verhindert, dass das Formular abgeschickt wird, wenn es false returned.*@
 @using (Html.BeginForm("ValidateAnswers", "QuestionProgress", FormMethod.Get, new { onsubmit = "return validateForm(['where', 'like'])", autocomplete = "off" }))
 {
-    <div class="form-group">
-        <span class="bluespan">SELECT</span> * <span class="bluespan">FROM</span> Customers <br />
-        <input type="text" name="param0" id="param0" /> City <!--where-->
-        <input type="text" name="param1" id="param1" /> 'Berlin' <!--like-->
-        <input type="submit" class="btn-sm btn-primary" value="Check" />
-    </div>
+<div class="form-group">
+    <span class="bluespan">SELECT</span> * <span class="bluespan">FROM</span> Customers <br />
+    <input type="text" name="param0" id="param0" /> City <!--where-->
+    <input type="text" name="param1" id="param1" /> 'Berlin' <!--like-->
+    <br />
+    GO <br />
+    <input type="submit" class="btn-sm btn-primary" value="Check" />
+</div>
 }

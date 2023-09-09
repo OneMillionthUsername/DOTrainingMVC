@@ -9,38 +9,45 @@ namespace DOTrainingMVC.Controllers
 {
     public class QuestionProgressController : Controller
     {
-        private static int QuestionNumber { get; set; }
-        public static int QuestionCounter { get; set; }
-        private static Random Rnd = new Random((int)DateTime.Now.Ticks & 0x0000FFFF);
+        static int QuestionNumber { get; set; }
+        //public static int QuestionCounter { get; set; }
+        static readonly Random Rnd = new Random((int)DateTime.Now.Ticks & 0x0000FFFF);
         
         //get the count of the views
-        private static int NumberOfQuestions = Directory.GetFiles("./Views/QuestionProgress").Where(fileName => fileName.Contains("Frage")).ToArray().Length;
-        private static bool IsRandom = false;
+        static readonly int NumberOfQuestions = Directory.GetFiles("./Views/QuestionProgress").Where(fileName => fileName.Contains("Frage")).ToArray().Length;
+        static bool IsRandom = false;
 
         public IActionResult Welcome()
         {
-            //reset vars
-            QuestionNumber = 0;
-            QuestionCounter = 0;
-            ViewData["ShowSkipButton"] = false;
+            QuestionNumber = 0; //reset
+            IsRandom = false; //not really necessary, but just in case
+            ViewData["ShowSkipButton"] = false; //hide skip button
             return View();
         }
 
         public IActionResult SetRandomQuestions()
         {
             IsRandom = true;
-            QuestionNumber = Rnd.Next(1, NumberOfQuestions + 1); //generate first random question number
             return RedirectToAction(nameof(Frage));
         }
 
-        public IActionResult Frage()
+        public IActionResult Frage(bool? israndom)
         {
-            QuestionCounter++;
-            if (!IsRandom && QuestionNumber <= NumberOfQuestions) 
+            //Check if linear progression is requested.
+            if (israndom.HasValue && israndom == false)
+            {
+                IsRandom = false;
+                QuestionNumber = 0;
+            }
+            if (!IsRandom) 
             {
                 QuestionNumber++; //increment linear question progression
+                if (QuestionNumber > NumberOfQuestions) //if overflow, reset
+                {
+                    return RedirectToAction(nameof(Welcome));
+                }
             }
-            if (IsRandom)
+            else
             {
                 QuestionNumber = Rnd.Next(1, NumberOfQuestions + 1); //update random question number
             }
@@ -51,7 +58,7 @@ namespace DOTrainingMVC.Controllers
 
         public IActionResult ValidateAnswers()
         {
-            ViewData["ShowSkipButton"] = false;
+            ViewData["ShowSkipButton"] = false; //hide skip button
             return View();
         }
     }
