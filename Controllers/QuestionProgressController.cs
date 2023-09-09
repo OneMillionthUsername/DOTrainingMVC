@@ -9,12 +9,13 @@ namespace DOTrainingMVC.Controllers
 {
     public class QuestionProgressController : Controller
     {
-        public static int QuestionNumber { get; set; }
+        private static int QuestionNumber { get; set; }
+        public static int QuestionCounter { get; set; }
         private static Random Rnd = new Random((int)DateTime.Now.Ticks & 0x0000FFFF);
         
         //get the count of the views
         private static int NumberOfQuestions = Directory.GetFiles("./Views/QuestionProgress").Where(fileName => fileName.Contains("Frage")).ToArray().Length;
-        public static bool IsRandom = false;
+        private static bool IsRandom = false;
 
         public IActionResult Welcome()
         {
@@ -30,12 +31,13 @@ namespace DOTrainingMVC.Controllers
 
         public IActionResult Frage()
         {
+            QuestionCounter++;
             if (!IsRandom) 
             {
                 QuestionNumber++; //increment linear question progression
             }
             string viewName = $"Frage{QuestionNumber}";
-            return View(viewName);
+            return View(viewName, QuestionCounter);
         }
 
         public IActionResult ValidateAnswers()

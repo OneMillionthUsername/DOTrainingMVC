@@ -1,0 +1,29 @@
+﻿@model int
+@{
+    ViewData["Title"] = "Frage " + Model;
+}
+
+<h2>
+    Selektiere die Kategoriennamen mit der Anzahl der Produkte/Kategorie<br />
+</h2>
+@*onsubmit = "return func()" das return, verhindert, dass das Formular abgeschickt wird, wenn es false returned.*@
+@using (Html.BeginForm("ValidateAnswers", "QuestionProgress", FormMethod.Get,
+    new { onsubmit = "return validateForm(['count', 'from', 'left', 'join', 'p', 'on', 'group'])", autocomplete = "off" }))
+{
+    <div class="form-group">
+        SELECT c.CategoryId, c.CategoryName,
+        <input type="text" name="param0" id="param0" /> <!--count-->
+        (p.ProductID) AS Anzahl
+        <input type="text" name="param1" id="param1" /> <!--from-->
+        Categories c
+        <input type="text" name="param2" id="param2" /> <!--left-->
+        <input type="text" name="param3" id="param3" /> <!--join-->
+        Products
+        <input type="text" name="param4" id="param4" /> <br /> <!--p-->
+        <input type="text" name="param5" id="param5" /> <!--on-->
+        c.CategoryID = p.CategoryID <br />
+        <input type="text" name="param6" id="param6" /> by c.CategoryName, c.CategoryID<br /> <!--group-->
+        GO<br />
+        <input type="submit" class="btn-sm btn-primary" value="Check" />
+    </div>
+}
