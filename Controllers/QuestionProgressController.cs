@@ -36,16 +36,16 @@ namespace DOTrainingMVC.Controllers
             {
                 QuestionNumber++; //increment linear question progression
             }
+            if (IsRandom)
+            {
+                QuestionNumber = Rnd.Next(1, NumberOfQuestions + 1); //update random question number
+            }
             string viewName = $"Frage{QuestionNumber}";
             return View(viewName, QuestionNumber);
         }
 
         public IActionResult ValidateAnswers()
         {
-            if (IsRandom)
-            {
-                QuestionNumber = Rnd.Next(1, NumberOfQuestions + 1); //update random question number
-            }
             return View();
         }
     }
