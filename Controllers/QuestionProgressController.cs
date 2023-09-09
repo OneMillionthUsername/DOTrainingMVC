@@ -19,6 +19,10 @@ namespace DOTrainingMVC.Controllers
 
         public IActionResult Welcome()
         {
+            //reset vars
+            QuestionNumber = 0;
+            QuestionCounter = 0;
+            ViewData["ShowSkipButton"] = false;
             return View();
         }
 
@@ -41,11 +45,13 @@ namespace DOTrainingMVC.Controllers
                 QuestionNumber = Rnd.Next(1, NumberOfQuestions + 1); //update random question number
             }
             string viewName = $"Frage{QuestionNumber}";
+            ViewData["ShowSkipButton"] = true;
             return View(viewName, QuestionNumber);
         }
 
         public IActionResult ValidateAnswers()
         {
+            ViewData["ShowSkipButton"] = false;
             return View();
         }
     }

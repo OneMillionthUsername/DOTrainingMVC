@@ -15,8 +15,10 @@
             <div style="align-content:flex-start">
                 @RenderBody()
             </div>
-
-            <a href="/QuestionProgress/Frage" class="btn btn-primary">Skip</a>
+            @if (ViewData["ShowSkipButton"] != null && (bool)ViewData["ShowSkipButton"] == true)
+            {
+                <a href="/QuestionProgress/Frage" class="btn btn-primary">Skip</a>
+            }
 
         </main>
     </div>
