@@ -12,7 +12,7 @@
     LandId (int) <br />
 </h2>
 @*onsubmit = "return func()" das return, verhindert, dass das Formular abgeschickt wird, wenn es false returned.*@
-@using (Html.BeginForm("ValidateAnswers", "QuestionProgress", FormMethod.Get, new { onsubmit = "return validateForm(['personid', 'int', 'nvarchar', '50', 'nvarchar', '50', 'date', 'landid'])" }))
+@using (Html.BeginForm("ValidateAnswers", "QuestionProgress", FormMethod.Get, new { onsubmit = "return validateForm(['personid', 'int', 'nvarchar', '50', 'nvarchar', '50', 'date', 'landid'])", autocomplete = "off" }))
 {
 <div class="form-group">
     CREATE TABLE [dbo].[Person]( <br />
