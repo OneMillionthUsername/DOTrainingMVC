@@ -1,0 +1,21 @@
+﻿@model int
+@{
+    ViewData["Title"] = "Frage " + Model;
+}
+
+<h2>
+    Verändere die Tabelle "Person", indem du einen Foreign Key setzt <br />
+</h2>
+@*onsubmit = "return func()" das return, verhindert, dass das Formular abgeschickt wird, wenn es false returned.*@
+@using (Html.BeginForm("ValidateAnswers", "QuestionProgress", FormMethod.Get, 
+     new { onsubmit = "return validateForm(['alter', 'add', 'constraint', 'foreign', 'key', 'landid'])", autocomplete = "off" }))
+{
+<div class="form-group">
+    <input type="text" name="param0" id="param0" /> TABLE [dbo].[Person] <br />
+    <input type="text" id="param1" name="param1" /> <input type="text" name="param2" id="param2" /> [FK_Person_Land] <br />
+    <input type="text" name="param3" id="param3" /> <input type="text" name="param4" id="param4" /> ([LandId]) <br />
+    REFERENCES  [dbo].[Land] ( <input type="text" name="param5" id="param5" /> )<br />
+    GO <br />
+    <input type="submit" class="btn-sm btn-primary" value="Check" />
+</div>
+}

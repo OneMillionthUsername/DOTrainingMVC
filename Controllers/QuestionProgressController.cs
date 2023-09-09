@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,15 +10,30 @@ namespace DOTrainingMVC.Controllers
     public class QuestionProgressController : Controller
     {
         public static int QuestionNumber { get; set; }
+        private static Random Rnd = new Random();
+        //private static int NumberOfQuestions = Directory.EnumerateFiles("~/Views/QuestionProgress/").Where(fileName => fileName.Contains("Frage")).ToList().Count();
+        
+        private static int NumberOfQuestions = Directory.GetFiles("./Views/QuestionProgress").Where(fileName => fileName.Contains("Frage")).ToArray().Length;
+        public static bool IsRandom = false;
 
         public IActionResult Welcome()
         {
             return View();
         }
 
-        public IActionResult Frage()
+        public IActionResult SetRandomQuestions()
         {
-            QuestionNumber = 1;
+            IsRandom = true;
+            QuestionNumber = Rnd.Next(1, NumberOfQuestions + 1); //random question number
+            return RedirectToAction("Frage" + QuestionNumber);
+        }
+
+        public IActionResult Frage1()
+        {
+            if (!IsRandom) //possible bug -> url injection failing IsRandom logic.
+            {
+                QuestionNumber = 1;
+            }
             return View(QuestionNumber);
         }
 
@@ -48,7 +64,14 @@ namespace DOTrainingMVC.Controllers
 
         public IActionResult ValidateAnswers()
         {
-            QuestionNumber++; //question counter raised
+            if (IsRandom)
+            {
+                QuestionNumber = Rnd.Next(1, NumberOfQuestions + 1); //random question number
+            }
+            else
+            {
+                QuestionNumber++; //raise question counter
+            }
             return View(QuestionNumber);
         }
     }
