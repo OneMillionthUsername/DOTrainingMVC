@@ -1,0 +1,14 @@
+﻿@model Dictionary<string,string>
+@{ 
+    ViewData["Title"] = "Richtig";
+    //var b weil sonst "true" auf der View ausgegeben wird.
+    var b = @Model.TryGetValue("questionNumber", out string num);
+    int number = int.Parse(num);
+    string view = "Frage" + number;
+}
+
+<div class="container-fluid" style="background-color: green; text-decoration: none;">
+    <h1>Richtig!</h1>
+    @*<h2><span style="color: blue;">SELECT</span> * <span style="color: blue;"> FROM </span>Customers</h2>*@
+</div>
+<a href="/QuestionProgress/@view?questionNumber=@number" class="btn btn-primary">Weiter</a>

@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Frage " + ViewBag.QNumber;
+}
+<h2>Listen Sie alle Kunden auf</h2>
+
+@*onsubmit = "return func()" das return, verhindert, dass das Formular abgeschickt wird, wenn es false returned.*@
+
+@using (Html.BeginForm("ValidateAnswers", "QuestionProgress", FormMethod.Post, new { onsubmit = "return validateForm()" }))
+{
+    <div class="form-group">
+        <input type="text" name="param1" id="param1" /> * <span style="color: blue">FROM</span> <input type="text" id="param2" name="param2" />
+        <input type="hidden" name="questionNumber" value="@ViewBag.QNumber" />
+        <input type="hidden" name="returnUrl" value="@Html.ViewContext.ExecutingFilePath" />
+        <input type="submit" class="btn-sm btn-primary" value="Check" />
+    </div>
+}
+
+<script language="javascript" type="text/javascript">
+    function validateForm() {
+        var param1Value = String(document.getElementById("param1").value);
+        var param2Value = document.getElementById("param2").value;
+        var field1 = document.getElementById("param1");
+        var field2 = document.getElementById("param2");
+
+        if (param1Value.toLowerCase().trim() !== "select") {
+            field1.style.backgroundColor = "red";
+            if (param2Value.toLowerCase().trim() !== "customers") {
+                field2.style.backgroundColor = "red";
+            }
+            else {
+                field2.style.backgroundColor = "green";
+            }
+            //alert("Leider falsch.");
+            return false; // Formular wird nicht abgesendet
+        }
+        else {
+            field1.style.backgroundColor = "green";
+        }
+        if (param2Value.toLowerCase().trim() !== "customers") {
+            field2.style.backgroundColor = "red";
+            //alert("Leider falsch.");
+            return false; // Formular wird nicht abgesendet
+        }
+        field2.style.backgroundColor = "green";
+        // Weitere Validierungslogik hier hinzufügen, falls erforderlich
+
+        return true; // Formular wird abgesendet, wenn die Validierung erfolgreich ist
+    }
+</script>
