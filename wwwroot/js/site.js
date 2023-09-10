@@ -3,6 +3,10 @@
 
 // Write your JavaScript code.
 
+function printSolution() {
+	var text = document.getElementById("solutionText").innerHTML;
+	console.log(text);
+}
 
 function validateForm(solution) {
 	//init vars
@@ -30,6 +34,7 @@ function validateForm(solution) {
 	}
 	
 	if (result) {
+		printSolution();
 		return true; // Formular wird abgesendet, wenn die Validierung erfolgreich ist
 	}
 	return false;
