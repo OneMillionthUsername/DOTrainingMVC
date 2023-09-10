@@ -8,15 +8,18 @@ function extractValuesAndTextNodes() {
 	function extractTextAndValues(node) {
 		var result = '';
 
-		if (node.nodeType === Node.TEXT_NODE) {
-			// Wenn es ein Textknoten ist, füge den Text hinzu
-			result += node.textContent;
-		} else if (node.nodeType === Node.ELEMENT_NODE) {
+		//if (node.nodeType === Node.TEXT_NODE) {
+		//	// Wenn es ein Textknoten ist, füge den Text hinzu
+		//	result += node.textContent.trim();
+		//} else 
+		if (node.nodeType === Node.ELEMENT_NODE) {
 			// Wenn es ein Elementknoten ist, rufe den Wert des Elements (falls vorhanden) ab
-			var elementValue = node.value || node.textContent;
+			if (node.id !== "solutionText") {
+				var elementValue = node.value || node.textContent;
 
-			if (elementValue) {
-				result += elementValue;
+				if (elementValue) {
+					result += elementValue;
+				}
 			}
 
 			// Durchlaufe alle Kinder des Elements
