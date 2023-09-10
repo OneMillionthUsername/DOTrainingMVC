@@ -12,25 +12,25 @@
 {
 <div class="form-group">
     <div id="solutionText">
-        <span>SELECT c.CategoryId, c.CategoryName,</span>
+        <span>SELECT c.CategoryId, c.CategoryName, </span>
         <!--count-->
         <input type="text" name="param0" id="param0" />
-        <span>(p.ProductID) AS Anzahl</span>
+        <span> (p.ProductID) AS Anzahl </span>
         <!--from-->
-        <input type="text" name="param1" id="param1" />
-        <span>Categories c</span>
+        <input type="text" name="param1" id="param1" /><span>&nbsp;</span>
+        <span> Categories c </span>
         <!--left-->
-        <input type="text" name="param2" id="param2" />
+        <input type="text" name="param2" id="param2" /><span>&nbsp;</span>
         <!--join-->
-        <input type="text" name="param3" id="param3" />
-        <span>Products</span>
+        <input type="text" name="param3" id="param3" /><span>&nbsp;</span>
+        <span> Products </span>
         <!--p-->
-        <input type="text" name="param4" id="param4" /><br />
+        <input type="text" name="param4" id="param4" /><span>&nbsp;</span><br />
         <!--on-->
-        <input type="text" name="param5" id="param5" />
-        <span>c.CategoryID = p.CategoryID</span><br />
+        <input type="text" name="param5" id="param5" /><span>&nbsp;</span>
+        <span> c.CategoryID = p.CategoryID </span><br />
         <!--group-->
-        <input type="text" name="param6" id="param6" /><span>by c.CategoryName, c.CategoryID</span><br />
+        <input type="text" name="param6" id="param6" /><span> by c.CategoryName, c.CategoryID </span><br />
         <span> GO</span><br />
     </div>
     <input type="hidden" name="solutionString" id="solutionString" />

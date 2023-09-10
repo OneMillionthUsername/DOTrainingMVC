@@ -59,7 +59,7 @@ namespace DOTrainingMVC.Controllers
         public IActionResult ValidateAnswers(string solutionString)
         {
             ViewData["ShowSkipButton"] = false; //hide skip button
-            ViewBag.solutionString = solutionString;
+            ViewBag.solutionString = solutionString.ToLower();
             return View();
         }
     }
