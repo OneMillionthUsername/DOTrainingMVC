@@ -1,16 +1,44 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿
 
-// Write your JavaScript code.
+function extractValuesAndTextNodes() {
+	// Das übergeordnete Element auswählen
+	var parentElement = document.getElementById("solutionText");
 
-function printSolution() {
-	var text = document.getElementById("solutionText").innerHTML;
-	console.log(text);
+	// Funktion zur rekursiven Extraktion von Textknoten und Werten
+	function extractTextAndValues(node) {
+		var result = '';
+
+		if (node.nodeType === Node.TEXT_NODE) {
+			// Wenn es ein Textknoten ist, füge den Text hinzu
+			result += node.textContent;
+		} else if (node.nodeType === Node.ELEMENT_NODE) {
+			// Wenn es ein Elementknoten ist, rufe den Wert des Elements (falls vorhanden) ab
+			var elementValue = node.value || node.textContent;
+
+			if (elementValue) {
+				result += elementValue;
+			}
+
+			// Durchlaufe alle Kinder des Elements
+			for (var i = 0; i < node.childNodes.length; i++) {
+				result += extractTextAndValues(node.childNodes[i]);
+			}
+		}
+
+		return result;
+	}
+
+	// Text und Werte aus dem übergeordneten Element extrahieren
+	var extractedContent = extractTextAndValues(parentElement);
+
+	// Den gesamten Text und Werte anzeigen oder anderweitig verwenden
+	console.log(extractedContent);
+
 }
 
 function validateForm(solution) {
 	//init vars
-	//var solution = ['select', 'customers'];
+	//var solution = ['select', 'customers', ...];
 	var valueContainer = {};
 	var fieldContainer = {};
 	var result = true;
@@ -34,7 +62,7 @@ function validateForm(solution) {
 	}
 	
 	if (result) {
-		printSolution();
+		extractValuesAndTextNodes();
 		return true; // Formular wird abgesendet, wenn die Validierung erfolgreich ist
 	}
 	return false;
