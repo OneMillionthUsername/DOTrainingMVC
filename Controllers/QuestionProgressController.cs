@@ -56,9 +56,10 @@ namespace DOTrainingMVC.Controllers
             return View(viewName, QuestionNumber);
         }
 
-        public IActionResult ValidateAnswers()
+        public IActionResult ValidateAnswers(string solutionString)
         {
             ViewData["ShowSkipButton"] = false; //hide skip button
+            ViewBag.solutionString = solutionString;
             return View();
         }
     }

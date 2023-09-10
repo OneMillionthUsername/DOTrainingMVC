@@ -10,22 +10,23 @@
 @using (Html.BeginForm("ValidateAnswers", "QuestionProgress", FormMethod.Get,
    new { onsubmit = "return validateForm(['distinct', 'products', 'left', 'on', 'p.CategoryID'])", autocomplete = "off" }))
 {
-    <div class="form-group">
-        <div id="solutionText">
-            <span>SELECT</span>
-            <!--distinct-->
-            <input type="text" name="param0" id="param0" /><span>s.CompanyName FROM</span>
-            <!--products-->
-            <input type="text" name="param1" id="param1" /><span>p</span><br /> 
-            <!--left-->
-            <input type="text" name="param2" id="param2" /><span>JOIN Suppliers s</span><br /> 
-            <!--on-->
-            <input type="text" name="param3" id="param3" /><span>p.SupplierID = s.SupplierID</span><br /> 
-            <span>WHERE</span>
-            <!--p.categoryid-->
-            <input type="text" name="param4" id="param4" /><span>= 8</span><br /> 
-            <span> GO</span><br />
-        </div>
-        <input type="submit" class="btn-sm btn-primary" value="Check" />
+<div class="form-group">
+    <div id="solutionText">
+        <span>SELECT</span>
+        <!--distinct-->
+        <input type="text" name="param0" id="param0" /><span>s.CompanyName FROM</span>
+        <!--products-->
+        <input type="text" name="param1" id="param1" /><span>p</span><br />
+        <!--left-->
+        <input type="text" name="param2" id="param2" /><span>JOIN Suppliers s</span><br />
+        <!--on-->
+        <input type="text" name="param3" id="param3" /><span>p.SupplierID = s.SupplierID</span><br />
+        <span>WHERE</span>
+        <!--p.categoryid-->
+        <input type="text" name="param4" id="param4" /><span>= 8</span><br />
+        <span> GO</span><br />
     </div>
+    <input type="hidden" name="solutionString" id="solutionString" />
+    <input type="submit" class="btn-sm btn-primary" value="Check" />
+</div>
 }

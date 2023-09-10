@@ -15,26 +15,27 @@
 @using (Html.BeginForm("ValidateAnswers", "QuestionProgress", FormMethod.Get,
     new { onsubmit = "return validateForm(['personid', 'int', 'nvarchar', '50', 'date', 'landid'])", autocomplete = "off" }))
 {
-    <div class="form-group">
-        <div id="solutionText">
-            <span>CREATE TABLE [dbo].[Person](</span><br />
-            <!--personid-->
-            <input type="text" name="param0" id="param0" /> 
-            <!--int-->
-            <input type="text" name="param1" id="param1" /><span>IDENTITY(1,1) NOT NULL, </span><br /> 
-            <span>[Vorname]</span>
-            <!--nvarchar-->
-            <input type="text" name="param2" id="param2" /><span>(</span> 
-            <!--50-->
-            <input type="text" name="param3" id="param3" /><span>) NULL,</span> <br />
-            <span>[Nachname] nvarchar(50) NULL,</span><br />
-            <span>[GebDatum]</span>
-            <!--date-->
-            <input type="text" name="param4" id="param4" /><span>NULL,</span> <br /> 
-            <!--landid-->
-            <input type="text" name="param5" id="param5" /><span>[int] NULL )</span><br /> 
-            <span> GO</span><br />
-        </div>
-        <input type="submit" class="btn-sm btn-primary" value="Check" />
+<div class="form-group">
+    <div id="solutionText">
+        <span>CREATE TABLE [dbo].[Person](</span><br />
+        <!--personid-->
+        <input type="text" name="param0" id="param0" />
+        <!--int-->
+        <input type="text" name="param1" id="param1" /><span>IDENTITY(1,1) NOT NULL, </span><br />
+        <span>[Vorname]</span>
+        <!--nvarchar-->
+        <input type="text" name="param2" id="param2" /><span>(</span>
+        <!--50-->
+        <input type="text" name="param3" id="param3" /><span>) NULL,</span> <br />
+        <span>[Nachname] nvarchar(50) NULL,</span><br />
+        <span>[GebDatum]</span>
+        <!--date-->
+        <input type="text" name="param4" id="param4" /><span>NULL,</span> <br />
+        <!--landid-->
+        <input type="text" name="param5" id="param5" /><span>[int] NULL )</span><br />
+        <span> GO</span><br />
     </div>
+    <input type="hidden" name="solutionString" id="solutionString" />
+    <input type="submit" class="btn-sm btn-primary" value="Check" />
+</div>
 }

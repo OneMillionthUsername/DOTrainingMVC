@@ -1,5 +1,4 @@
 ﻿
-
 function extractValuesAndTextNodes() {
 	// Das übergeordnete Element auswählen
 	var parentElement = document.getElementById("solutionText");
@@ -12,8 +11,9 @@ function extractValuesAndTextNodes() {
 		//	// Wenn es ein Textknoten ist, füge den Text hinzu
 		//	result += node.textContent.trim();
 		//} else 
+		// Wenn es ein Elementknoten ist, rufe den Wert des Elements (falls vorhanden) ab
 		if (node.nodeType === Node.ELEMENT_NODE) {
-			// Wenn es ein Elementknoten ist, rufe den Wert des Elements (falls vorhanden) ab
+			// Überspringe den ersten Knoten
 			if (node.id !== "solutionText") {
 				var elementValue = node.value || node.textContent;
 
@@ -31,12 +31,11 @@ function extractValuesAndTextNodes() {
 		return result;
 	}
 
-	// Text und Werte aus dem übergeordneten Element extrahieren
 	var extractedContent = extractTextAndValues(parentElement);
-
-	// Den gesamten Text und Werte anzeigen oder anderweitig verwenden
-	console.log(extractedContent);
-
+	var solutionString = document.getElementById("solutionString");
+	if (solutionString) {
+		solutionString.value = extractedContent;
+	}
 }
 
 function validateForm(solution) {
@@ -71,7 +70,6 @@ function validateForm(solution) {
 	return false;
 }
 
-// Event-Listener, der auf das DOMContentLoaded-Ereignis wartet
 document.addEventListener('DOMContentLoaded', function () {
 	// Hier das erste Eingabefeld automatisch fokussieren
 	var firstInput = document.getElementById('param0');
