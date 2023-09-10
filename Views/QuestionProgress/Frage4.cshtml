@@ -12,14 +12,21 @@
 @using (Html.BeginForm("ValidateAnswers", "QuestionProgress", FormMethod.Get, new { onsubmit = "return validateForm(['create', 'table', 'int', 'identity(1,1)', '50'])", autocomplete = "off" }))
 {
 <div class="form-group">
-    <input type="text" name="param0" id="param0" /> <!--create-->
-    <input type="text" id="param1" name="param1" /> [dbo].[Land] ( <br /> <!--table-->
-    [LandId]
-    <input type="text" name="param2" id="param2" /> <!--int-->
-    <input type="text" name="param3" id="param3" /> NOT NULL, <br /> <!--identity(1,1)-->
-    [LandName] [nvarchar](
-    <input type="text" name="param4" id="param4" /> ) NULL ) <br /> <!--50-->
-    GO <br />
-    <input type="submit" class="btn-sm btn-primary" value="Check" />
-</div>
-}
+    <div id="solutionText">
+        <!--create-->
+        <input type="text" name="param0" id="param0" /> 
+        <!--table-->
+        <input type="text" id="param1" name="param1" /><span> [dbo].[Land] (</span><br /> 
+        <span>[LandId]</span>
+        <!--int-->
+        <input type="text" name="param2" id="param2" /> 
+        <!--identity(1,1)-->
+        <input type="text" name="param3" id="param3" /><span>NOT NULL, </span><br /> 
+        <span> [LandName] [nvarchar](</span>
+        <!--50-->
+        <input type="text" name="param4" id="param4" /><span>) NULL ) </span><br /> 
+        <span> GO</span><br />
+    </div>
+        <input type="submit" class="btn-sm btn-primary" value="Check" />
+    </div>
+    }
