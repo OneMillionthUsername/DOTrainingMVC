@@ -60,16 +60,16 @@ namespace DOTrainingMVC.Controllers
         {
             ViewData["ShowSkipButton"] = false; //hide skip button
             string[] words = solutionString.Split(' ');
-            foreach (var item in Enum.GetNames(typeof(SQLBlueKeywords)))
-            {
-                for (int i = 0; i < words.Length; i++)
-                {
-                    if (true)
-                    {
+            //foreach (var item in Enum.GetNames(typeof(SQLBlueKeywords)))
+            //{
+            //    for (int i = 0; i < words.Length; i++)
+            //    {
+            //        if (true)
+            //        {
 
-                    }
-                }
-            }
+            //        }
+            //    }
+            //}
             ViewBag.solutionString = solutionString.ToLower();
             return View();
         }
