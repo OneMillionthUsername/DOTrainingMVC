@@ -7,10 +7,6 @@ function extractValuesAndTextNodes() {
 	function extractTextAndValues(node) {
 		var result = '';
 
-		//if (node.nodeType === Node.TEXT_NODE) {
-		//	// Wenn es ein Textknoten ist, füge den Text hinzu
-		//	result += node.textContent.trim();
-		//} else 
 		// Wenn es ein Elementknoten ist, rufe den Wert des Elements (falls vorhanden) ab
 		if (node.nodeType === Node.ELEMENT_NODE) {
 			// Überspringe den ersten Knoten
