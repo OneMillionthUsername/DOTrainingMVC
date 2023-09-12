@@ -1,0 +1,17 @@
+﻿<div>
+    <form action="/QuestionProgress/QuestionGenerator" method="post" class="form-group">
+        <div>
+            <label class="col-form-label">Fragebeschreibung</label><br />
+            <textarea class="form-control" name="questionDescription" id="questionDescription" rows="3"></textarea> <br />
+        </div>
+        <div>
+            <label class="col-form-label">Voll ausgeschriebenes SQL script</label> <br />
+            <textarea class="form-control" name="script" id="script"></textarea> <br />
+        </div>
+        <div>
+            <label class="col-form-label">Liste der gesuchten Lösungsbegriffe</label> <br />
+            <input class="form-control" type="text" name="solutionTerms" id="solutionTerms" value="" /> <br />
+        </div>
+        <input type="submit" name="submit" id="submit" value="Generate" class="btn btn-primary" />
+    </form>
+</div>

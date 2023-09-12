@@ -73,5 +73,17 @@ namespace DOTrainingMVC.Controllers
             ViewBag.solutionString = solutionString.ToLower();
             return View();
         }
+        [HttpGet]
+        public IActionResult QuestionGenerator()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult QuestionGenerator(string questionDescription, string script, string solutionTerms)
+        {
+            //erstelle eine neue View
+            //mit <form>
+            return View();
+        }
     }
 }
