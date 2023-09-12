@@ -83,6 +83,9 @@ namespace DOTrainingMVC.Controllers
         {
             //erstelle eine neue View
             //mit <form>
+//entferne alle Lösungsterme aus dem Script und ersetze sie mit einem "Trennzeichen"
+//Zwischen den Trennzeichen sind die <span> Elemente. 
+//Die Trennzeichen werden selbst durch <input> Elemente ersetzt.
             return View();
         }
     }
