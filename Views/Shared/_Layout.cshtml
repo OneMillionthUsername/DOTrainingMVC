@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@{ 
+    int qIndex = 0;
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -19,7 +22,16 @@
             {
                 <a href="/QuestionProgress/Frage" class="btn btn-primary">Skip</a>
             }
-
+            <br />Frage:
+            @{
+                if (ViewBag.NumberOfQuestions != null && ViewBag.NumberOfQuestions > 0)
+                {
+                    for (int i = 1; i <= ViewBag.NumberOfQuestions; i++)
+                    {
+                        <a href="/QuestionProgress/Frage?qNum=@i">@i</a>
+                    }
+                }
+            }
         </main>
     </div>
 

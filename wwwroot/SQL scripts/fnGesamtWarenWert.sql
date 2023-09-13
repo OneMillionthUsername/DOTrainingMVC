@@ -16,5 +16,7 @@ BEGIN
 END
 GO
 
+--CREATE, FUNCTION , RETURNS , BEGIN, END
+
 SELECT p.ProductID, p.ProductName, p.UnitPrice, p.UnitsInStock, dbo.fnGesamtwarenwert(1) AS "Gesamtwert im Lager" FROM Products p
 WHERE ProductID = 1
