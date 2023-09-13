@@ -20,3 +20,22 @@ GO
 
 SELECT p.ProductID, p.ProductName, p.UnitPrice, p.UnitsInStock, dbo.fnGesamtwarenwert(1) AS "Gesamtwert im Lager" FROM Products p
 WHERE ProductID = 1
+
+-- AUFGABE:
+-- Eine Funktion schreiben, die den Anzahl 
+-- der Untergeordneten vom angegebenen Mitarbeiter 
+-- zurück gibt.
+
+SELECT * FROM Employees WHERE ReportsTo = 2
+SELECT COUNT(EmployeeID) FROM Employees WHERE ReportsTo = 2
+-- 2022-09-07
+
+GO
+CREATE FUNCTION fnAnzahlUntergeordnete(@VorgesetzeId int)  
+RETURNS int   
+AS BEGIN 
+     RETURN (SELECT COUNT(EmployeeID) 
+		FROM Employees WHERE ReportsTo = @VorgesetzeId)
+		-- Implizite Konvertierung ()
+END;
+GO
