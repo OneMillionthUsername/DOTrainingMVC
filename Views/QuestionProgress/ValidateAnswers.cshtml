@@ -1,10 +1,11 @@
 ﻿
-@{ 
+@{
     ViewData["Title"] = "Richtig";
 
 }
-<div class="container-fluid" style="background-color: green; height:fit-content; padding:25px">
+<div class="container-fluid" id="mainNode" style="background-color: green; height:fit-content; padding:25px">
     <h1>Richtig!</h1>
+    <p>@ViewBag.solutionString</p>
     <form action="/QuestionProgress/Frage" method="get">
         <input type="submit" id="submitBtn" value="Weiter" class="btn btn-primary" />
     </form>

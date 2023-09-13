@@ -9,21 +9,24 @@
 @using (Html.BeginForm("ValidateAnswers", "QuestionProgress", FormMethod.Get, new { onsubmit = "return validateForm(['select', 'products', 'left', 'on', 'c.CategoryID', 'where', 'Seafood' ])", autocomplete = "off" }))
 {
 <div class="form-group">
-    <!--select-->
-    <input type="text" name="param0" id="param0" /> ProductName, CategoryName FROM
-    <!--products-->
-    <input type="text" name="param1" id="param1" /> p<br />
-    <!--left-->
-    <input type="text" name="param2" id="param2" /> JOIN Categories c<br />
-    <!--on-->
-    <input type="text" name="param3" id="param3" /> p.CategoryID = 
-    <!--c.categoryid-->
-    <input type="text" name="param4" id="param4" /> <br /> 
-    <!--where-->
-    <input type="text" name="param5" id="param5" /> c.CategoryName like 
-    <!--'seafood'-->
-    '<input type="text" name="param6" id="param6" />' <br /> 
-    GO <br />
+    <div id="solutionText">
+        <!--select-->
+        <input type="text" name="param0" id="param0" /><span> ProductName, CategoryName FROM </span>
+        <!--products-->
+        <input type="text" name="param1" id="param1" /><span> p </span><br />
+        <!--left-->
+        <input type="text" name="param2" id="param2" /><span> JOIN Categories c </span><br />
+        <!--on-->
+        <input type="text" name="param3" id="param3" /><span> p.CategoryID = </span>
+        <!--c.categoryid-->
+        <input type="text" name="param4" id="param4" /><span>&nbsp;</span><br />
+        <!--where-->
+        <input type="text" name="param5" id="param5" /><span> c.CategoryName like </span>
+        <!--'seafood'-->
+        <span>'</span><input type="text" name="param6" id="param6" /><span>'</span><br />
+        <span> GO</span><br />
+    </div>
+    <input type="hidden" name="solutionString" id="solutionString" />
     <input type="submit" class="btn-sm btn-primary" value="Check" />
 </div>
 }

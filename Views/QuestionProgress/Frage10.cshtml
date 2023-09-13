@@ -8,22 +8,32 @@
 </h2>
 @*onsubmit = "return func()" das return, verhindert, dass das Formular abgeschickt wird, wenn es false returned.*@
 @using (Html.BeginForm("ValidateAnswers", "QuestionProgress", FormMethod.Get,
-    new { onsubmit = "return validateForm(['alter', 'function', 'returns', 'float', 'begin', 'return', '@y'])", autocomplete = "off" }))
+   new { onsubmit = "return validateForm(['alter', 'function', 'returns', 'float', 'begin', 'return', '@y'])", autocomplete = "off" }))
 {
 <div class="form-group">
-    CREATE OR
-    <input type="text" name="param0" id="param0" /> <!--alter-->
-    <input type="text" name="param1" id="param1" /> BerechneFlaecheRechteck <br /> <!--function-->
-    (@@x FLOAT, @@y FLOAT)
-    <input type="text" name="param2" id="param2" /> <!--returns-->
-    <input type="text" name="param3" id="param3" /> <br /> <!--float-->
-    AS <br />
-    <input type="text" name="param4" id="param4" /> <br /> <!--begin-->
-    <input type="text" name="param5" id="param5" /> <!--return-->
-    @@x *
-    <input type="text" name="param6" id="param6" /> <br /> <!--@@y-->
-    END<br />
-    GO<br />
+    <div id="solutionText">
+        <span>CREATE OR </span>
+        <!--alter-->
+        <input type="text" name="param0" id="param0" /><span>&nbsp;</span>
+        <!--function-->
+        <input type="text" name="param1" id="param1" /><span> BerechneFlaecheRechteck </span><br />
+        <span>(@@x FLOAT, @@y FLOAT)</span><span>&nbsp;</span>
+        <!--returns-->
+        <input type="text" name="param2" id="param2" /><span>&nbsp;</span>
+        <!--float-->
+        <input type="text" name="param3" id="param3" /><span>&nbsp;</span><br />
+        <span> AS </span><br />
+        <!--begin-->
+        <input type="text" name="param4" id="param4" /><span>&nbsp;</span><br />
+        <!--return-->
+        <input type="text" name="param5" id="param5" /><span>&nbsp;</span>
+        <span> @@x * </span>
+        <!--@@y-->
+        <input type="text" name="param6" id="param6" /><span>&nbsp;</span><br />
+        <span> END </span><br />
+        <span> GO</span><br />
+    </div>
+    <input type="hidden" name="solutionString" id="solutionString" />
     <input type="submit" class="btn-sm btn-primary" value="Check" />
 </div>
 }

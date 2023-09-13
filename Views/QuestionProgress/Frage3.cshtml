@@ -8,11 +8,15 @@
 @using (Html.BeginForm("ValidateAnswers", "QuestionProgress", FormMethod.Get, new { onsubmit = "return validateForm(['create', 'database', 'go'])", autocomplete = "off" }))
 {
 <div class="form-group">
-    <input type="text" name="param0" id="param0" /> <!--create-->
-    <input type="text" name="param1" id="param1" /> Personen <br /> <!--database-->
-    <input type="text" name="param2" id="param2" /> <!--go-->
-    <br />        
-    GO <br />
+    <div id="solutionText">
+        <!--create-->
+        <input type="text" name="param0" id="param0" />
+        <!--database-->
+        <span>&nbsp;</span><input type="text" name="param1" id="param1" /><span> Personen </span><br />
+        <!--go-->
+        <input type="text" name="param2" id="param2" /><br />
+    </div>
+    <input type="hidden" name="solutionString" id="solutionString" />
     <input type="submit" class="btn-sm btn-primary" value="Check" />
 </div>
 }

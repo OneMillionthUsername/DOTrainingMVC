@@ -1,16 +1,42 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿
+function extractValuesAndTextNodes() {
+	// Das übergeordnete Element auswählen
+	var parentElement = document.getElementById("solutionText");
 
-// Write your JavaScript code.
+	// Funktion zur rekursiven Extraktion von Textknoten und Werten
+	function extractTextAndValues(node) {
+		var result = '';
 
-function printSolution() {
-	var text = document.getElementById("solutionText").innerHTML;
-	console.log(text);
+		// Wenn es ein Elementknoten ist, rufe den Wert des Elements (falls vorhanden) ab
+		if (node.nodeType === Node.ELEMENT_NODE) {
+			// Überspringe den ersten Knoten
+			if (node.id !== "solutionText") {
+				var elementValue = node.value || node.textContent;
+
+				if (elementValue) {
+					result += elementValue;
+				}
+			}
+
+			// Durchlaufe alle Kinder des Elements
+			for (var i = 0; i < node.childNodes.length; i++) {
+				result += extractTextAndValues(node.childNodes[i]);
+			}
+		}
+
+		return result;
+	}
+
+	var extractedContent = extractTextAndValues(parentElement);
+	var solutionString = document.getElementById("solutionString");
+	if (solutionString) {
+		solutionString.value = extractedContent;
+	}
 }
 
 function validateForm(solution) {
 	//init vars
-	//var solution = ['select', 'customers'];
+	//var solution = ['select', 'customers', ...];
 	var valueContainer = {};
 	var fieldContainer = {};
 	var result = true;
@@ -34,13 +60,12 @@ function validateForm(solution) {
 	}
 	
 	if (result) {
-		printSolution();
+		extractValuesAndTextNodes();
 		return true; // Formular wird abgesendet, wenn die Validierung erfolgreich ist
 	}
 	return false;
 }
 
-// Event-Listener, der auf das DOMContentLoaded-Ereignis wartet
 document.addEventListener('DOMContentLoaded', function () {
 	// Hier das erste Eingabefeld automatisch fokussieren
 	var firstInput = document.getElementById('param0');

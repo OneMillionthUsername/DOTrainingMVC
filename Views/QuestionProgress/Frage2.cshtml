@@ -8,11 +8,15 @@
 @using (Html.BeginForm("ValidateAnswers", "QuestionProgress", FormMethod.Get, new { onsubmit = "return validateForm(['where', 'like'])", autocomplete = "off" }))
 {
 <div class="form-group">
-    <span class="bluespan">SELECT</span> * <span class="bluespan">FROM</span> Customers <br />
-    <input type="text" name="param0" id="param0" /> City <!--where-->
-    <input type="text" name="param1" id="param1" /> 'Berlin' <!--like-->
-    <br />
-    GO <br />
+    <div id="solutionText">
+        <span>SELECT * FROM Customers </span><br />
+        <!--where-->
+        <input type="text" name="param0" id="param0" /><span> City </span>
+        <!--like-->
+        <input type="text" name="param1" id="param1" /><span> 'Berlin' </span><br />
+        GO<br />
+    </div>
+    <input type="hidden" name="solutionString" id="solutionString" />
     <input type="submit" class="btn-sm btn-primary" value="Check" />
 </div>
 }

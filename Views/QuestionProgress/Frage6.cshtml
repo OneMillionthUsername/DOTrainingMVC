@@ -7,18 +7,27 @@
     Verändere die Tabelle "Person", indem du einen Foreign Key setzt <br />
 </h2>
 @*onsubmit = "return func()" das return, verhindert, dass das Formular abgeschickt wird, wenn es false returned.*@
-@using (Html.BeginForm("ValidateAnswers", "QuestionProgress", FormMethod.Get, 
-     new { onsubmit = "return validateForm(['alter', 'add', 'constraint', 'foreign', 'key', 'landid'])", autocomplete = "off" }))
+@using (Html.BeginForm("ValidateAnswers", "QuestionProgress", FormMethod.Get,
+    new { onsubmit = "return validateForm(['alter', 'add', 'constraint', 'foreign', 'key', 'landid'])", autocomplete = "off" }))
 {
 <div class="form-group">
-    <input type="text" name="param0" id="param0" /> TABLE [dbo].[Person] <br /> <!--alter-->
-    <input type="text" name="param1" id="param1" /> <!--add-->
-    <input type="text" name="param2" id="param2" /> [FK_Person_Land] <br /> <!--constraint-->
-    <input type="text" name="param3" id="param3" /> <!--foreign-->
-    <input type="text" name="param4" id="param4" /> ([LandId]) <br /> <!--key-->
-    REFERENCES  [dbo].[Land] (
-    <input type="text" name="param5" id="param5" /> )<br /> <!--landid-->
-    GO <br />
+    <div id="solutionText">
+        <!--alter-->
+        <input type="text" name="param0" id="param0" /><span>TABLE [dbo].[Person]</span><br />
+        <!--add-->
+        <input type="text" name="param1" id="param1" />
+        <!--constraint-->
+        <input type="text" name="param2" id="param2" /><span>[FK_Person_Land]</span><br />
+        <!--foreign-->
+        <input type="text" name="param3" id="param3" />
+        <!--key-->
+        <input type="text" name="param4" id="param4" /><span>([LandId])</span><br />
+        <span>REFERENCES[dbo].[Land](</span>
+        <!--landid-->
+        <input type="text" name="param5" id="param5" /><span>)</span><br />
+        <span> GO</span><br />
+    </div>
+    <input type="hidden" name="solutionString" id="solutionString" />
     <input type="submit" class="btn-sm btn-primary" value="Check" />
 </div>
 }

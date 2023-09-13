@@ -4,20 +4,31 @@
 }
 
 <h2>
-    Verändere die Tabelle "Person", indem du einen Foreign Key setzt <br />
+    Selektiere alle Prokte aus der Produkte-Tabelle, die von den
+    Lieferanten Nr 3 und 7 geliefert werden oder
+    die teurer als 30 € sind <br />
 </h2>
 @*onsubmit = "return func()" das return, verhindert, dass das Formular abgeschickt wird, wenn es false returned.*@
 @using (Html.BeginForm("ValidateAnswers", "QuestionProgress", FormMethod.Get,
-    new { onsubmit = "return validateForm(['alter', 'add', 'constraint', 'foreign', 'key', 'landid'])", autocomplete = "off" }))
+   new { onsubmit = "return validateForm(['select', 'from', 'where', 'and', 'or', '>='])", autocomplete = "off" }))
 {
 <div class="form-group">
-    <input type="text" name="param0" id="param0" /> TABLE [dbo].[Person] <br /> <!--alter-->
-    <input type="text" name="param1" id="param1" /><!--add-->
-    <input type="text" name="param2" id="param2" /> [FK_Person_Land] <br /> <!--constraint-->
-    <input type="text" name="param3" id="param3" />  <!--foreign-->
-    <input type="text" name="param4" id="param4" /> ([LandId]) <br /> REFERENCES  [dbo].[Land] ( <!--key-->
-    <input type="text" name="param5" id="param5" /> )<br /> <!--landid-->
-    GO <br />
+    <div id="solutionText">
+        <!--select-->
+        <input type="text" name="param0" id="param0" /><span> * </span>
+        <!--from-->
+        <input type="text" name="param1" id="param1" /> Products <span>&nbsp;</span><br />
+        <!--where-->
+        <input type="text" name="param2" id="param2" /><span> (Lieferantennr = 3 </span>
+        <!--or-->
+        <input type="text" name="param3" id="param3" /><span> Lieferantennr = 7) </span>
+        <!--and-->
+        <input type="text" name="param4" id="param4" /><span> Einzelpreis </span>
+        <!-- greater/equal -->
+        <input type="text" name="param5" id="param5" /><span> 30 </span><br />
+        <span> GO</span><br />
+    </div>
+    <input type="hidden" name="solutionString" id="solutionString" />
     <input type="submit" class="btn-sm btn-primary" value="Check" />
 </div>
 }
