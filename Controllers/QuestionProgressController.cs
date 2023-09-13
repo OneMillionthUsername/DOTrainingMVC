@@ -92,22 +92,20 @@ namespace DOTrainingMVC.Controllers
             script = script.Replace("\r\n", "<br />");
             string[] scriptArray = script.Split("<br />");
             string solution = "";
+            string fileContent = "";
 
             //Pfad + Dateiname für file create.
             string path = $"./Views/QuestionProgress/Frage{NumberOfQuestions + 1}.cshtml";
 
             //solution array trimmen und als string an validateForm übergeben
-            string solutionAsParam = "[";
+            string solutionAsParamsList = "[";
             for (int i = 0; i < solutionArray.Length; i++)
             {
                 var temp = solutionArray[i].Trim();
-                solutionAsParam += $"'{temp}',";
+                solutionAsParamsList += $"'{temp}',";
                 solutionArray[i] = temp;
             }
-            solutionAsParam = solutionAsParam.Substring(0, solutionAsParam.Length - 1) + "]";
-
-            string fileContent = "";
-            //int j = 0;
+            solutionAsParamsList = solutionAsParamsList.Substring(0, solutionAsParamsList.Length - 1) + "]";
 
             //header
             fileContent += "@model int\r\n" +
@@ -116,7 +114,7 @@ namespace DOTrainingMVC.Controllers
                 "}\r\n" +
                 $"<h2>\r\n{questionDescription.Trim()}\r\n</h2>\r\n" +
                 "@using (Html.BeginForm(\"ValidateAnswers\", \"QuestionProgress\", FormMethod.Get," +
-                $"new {{ onsubmit = \"return validateForm({solutionAsParam})\", autocomplete = \"off\" }}))\r\n" +
+                $"new {{ onsubmit = \"return validateForm({solutionAsParamsList})\", autocomplete = \"off\" }}))\r\n" +
                 "{\r\n<div class=\"form-group\">\r\n<div id=\"solutionText\">\r\n";
             //header ende
 
@@ -139,6 +137,11 @@ namespace DOTrainingMVC.Controllers
                         wordCounter++;
                         solutionTermCounter++;
                     }
+                    if (string.IsNullOrEmpty(lineArray[wordCounter]))
+                    {
+                        wordCounter++;
+                        continue;
+                    }
                     else
                     {
                         if (lineArray[wordCounter].Contains('@'))
@@ -155,6 +158,7 @@ namespace DOTrainingMVC.Controllers
                         wordCounter++;
                     }
                 }
+                solution += "<br />";
             }
             fileContent += solution;
             //body ende

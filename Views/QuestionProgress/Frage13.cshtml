@@ -3,7 +3,7 @@
 	ViewData["Title"] = "Frage " + Model;
 }
 <h2>
-Berechne in einer Funktion die Summe des Warenwertes eines Produktes im Lager.
+Schreibe eine Funktion, die die Summe aller Lagerbest?nde eines Produktes berechnet.
 </h2>
 @using (Html.BeginForm("ValidateAnswers", "QuestionProgress", FormMethod.Get,new { onsubmit = "return validateForm(['CREATE','FUNCTION','RETURNS','BEGIN','END'])", autocomplete = "off" }))
 {
@@ -12,22 +12,19 @@ Berechne in einer Funktion die Summe des Warenwertes eines Produktes im Lager.
 
 <!--create-->
 <input type="text" name="param0" id="param0" />
-<span> OR ALTER </span>
+<span> OR </span><span> ALTER </span>
 <!--function-->
 <input type="text" name="param1" id="param1" />
-<span> fnGesamtwarenwert(@@ProductId INT) </span> <br />
+<span> fnGesamtwarenwert(@@ProductId </span><span> INT) </span><br />
 <!--returns-->
 <input type="text" name="param2" id="param2" />
-<span> DECIMAL(18,2) </span><span> AS </span> <br />
+<span> DECIMAL(18,2) </span><br /><span> AS </span><br />
 <!--begin-->
-<input type="text" name="param3" id="param3" /> <br />
-<span> 	DECLARE </span><span> @@ret </span><span> int; </span><br />
-<span>	SELECT </span><span> @@ret </span><span> = </span><span> Unitprice </span><span> * </span><span> UnitsInStock </span><span> FROM </span><span> Products </span><br />
-<span> 	WHERE </span><span> ProductID </span><span> = </span><span> @@ProductId </span>
-<br /><span> 	RETURN </span><span> @@ret </span><br />
+<input type="text" name="param3" id="param3" />
+<br /><span> 	DECLARE </span><span> @@ret </span><span> int; </span><br /><span> 	SELECT </span><span> @@ret </span><span> = </span><span> Unitprice </span><span> * </span><span> UnitsInStock </span><span> FROM </span><span> Products </span><br /><span> 	WHERE </span><span> ProductID </span><span> = </span><span> @@ProductId </span><br /><span> 	RETURN </span><span> @@ret </span><br />
 <!--end-->
-<input type="text" name="param4" id="param4" /><br />
-<span> GO </span>
+<input type="text" name="param4" id="param4" />
+<br /><span> GO </span><br />
 </div>
 <input type="hidden" name="solutionString" id ="solutionString"/>
 <input type="submit" class="btn-sm btn-primary" value="Check"/>
