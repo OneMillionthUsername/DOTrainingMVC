@@ -79,7 +79,8 @@ namespace DOTrainingMVC.Controllers
             return View();
         }
         /// <summary>
-        /// Erzeugt eine neue Ansicht und übergibt <paramref name="solutionTerms"/> (Lösungsarray), <paramref name="questionDescription"/> (die Fragenbeschreibung) und <paramref name="script"/> (das Lösungsscript) dem DOM.
+        /// Erzeugt eine neue Ansicht mit den gewünschten <paramref name="solutionTerms"/> (Liste der Lösungswörter),
+        /// der <paramref name="questionDescription"/> (Frage) und dem <paramref name="script"/> (das vorgefertigte Script, worin die Lösungswörter zu Eingabefeldern werden).
         /// </summary>
         /// <param name="questionDescription"></param>
         /// <param name="script"></param>
@@ -128,7 +129,7 @@ namespace DOTrainingMVC.Controllers
             for (int i = 0; i < scriptArray.Length; i++)
             {
                 string[] lineArray = scriptArray[i].Split(' ');
-                int wordCounter = 0;
+                int wordCounter = 0; 
                 while (wordCounter < lineArray.Length)
                 {
                     if (solutionTermCounter < solutionArray.Length && lineArray[wordCounter].ToLower().Trim() == solutionArray[solutionTermCounter])
@@ -143,17 +144,17 @@ namespace DOTrainingMVC.Controllers
                         continue;
                     }
                     else
-                    {
+                    {   
                         if (lineArray[wordCounter].Contains('@'))
                         {
                             var index = lineArray[wordCounter].IndexOf('@');
                             var doubleAtString = lineArray[wordCounter].Remove(index) + '@' + lineArray[wordCounter].Substring(index);
-                            solution += $"<span> {doubleAtString} </span>";
+                            solution += $"<span> {doubleAtString} </span>"; //<- wann brauch ich das closing tag wirklich?!
                         }
                         else
                         {
                             //if keyword, color!
-                            solution += $"<span> {lineArray[wordCounter]} </span>";
+                            solution += $"<span> {lineArray[wordCounter]} </span>"; //<- wann brauch ich das closing tag wirklich?!
                         }
                         wordCounter++;
                     }
