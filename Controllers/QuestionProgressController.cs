@@ -92,40 +92,6 @@ namespace DOTrainingMVC.Controllers
             script = script.Replace("\r\n", "<br />");
             string[] scriptArray = script.Split("<br />");
             string solution = "";
-            int l = 0;
-
-            for (int i = 0; i < scriptArray.Length; i++)
-            {
-                solutionArray[i] = solutionArray[i].Trim();
-                string[] temp = scriptArray[i].Split(' ');
-
-                while (l < temp.Length)
-                {
-                    if (temp[l] == solutionArray[i])
-                    {
-                        solution += $"\r\n<!--{solutionArray[i]}-->\r\n<br /><input type=\"text\" name=\"param{i}\" id=\"param{i}\" />\r\n";
-                        l++;
-                        break;
-                    }
-                    else
-                    {
-                        if (temp[l].Contains('@'))
-                        {
-                            var index = temp[l].IndexOf('@');
-                            var doubleAtString = temp[l].Remove(index) + '@' + temp[l].Substring(index);
-                            solution += $"<span> {doubleAtString} </span>";
-                        }
-                        else
-                        {
-                            //if keyword, color!
-                            solution += $"<span> {temp[l]} </span>";
-                        }
-                        l++;
-                    }
-                }
-            }
-
-            //script.Split(' ', '\r', '\n', '\t'/*, '(', ')'*/);
 
             //Pfad + Dateiname für file create.
             string path = $"./Views/QuestionProgress/Frage{NumberOfQuestions + 1}.cshtml";
@@ -141,61 +107,60 @@ namespace DOTrainingMVC.Controllers
             solutionAsParam = solutionAsParam.Substring(0, solutionAsParam.Length - 1) + "]";
 
             string fileContent = "";
-            int j = 0;
+            //int j = 0;
 
             //header
             fileContent += "@model int\r\n" +
                 "@{\r\n" +
                 "\tViewData[\"Title\"] = \"Frage \" + Model;\r\n" +
                 "}\r\n" +
-                $"<h2>\r\n{questionDescription}\r\n" +
-                " </h2>\r\n" +
+                $"<h2>\r\n{questionDescription.Trim()}\r\n</h2>\r\n" +
                 "@using (Html.BeginForm(\"ValidateAnswers\", \"QuestionProgress\", FormMethod.Get," +
                 $"new {{ onsubmit = \"return validateForm({solutionAsParam})\", autocomplete = \"off\" }}))\r\n" +
-                "{<div class=\"form-group\">\r\n" +
-                "<div id=\"solutionText\">\r\n";
+                "{\r\n<div class=\"form-group\">\r\n<div id=\"solutionText\">\r\n";
             //header ende
 
-
             //body
+            int solutionTermCounter = 0;
             for (int i = 0; i < solutionArray.Length; i++)
             {
-                while (j <= scriptArray.Length)
+                solutionArray[i] = solutionArray[i].Trim().ToLower();
+            }
+
+            for (int i = 0; i < scriptArray.Length; i++)
+            {
+                string[] lineArray = scriptArray[i].Split(' ');
+                int wordCounter = 0;
+                while (wordCounter < lineArray.Length)
                 {
-                    //wenn Lösungswort im Script gefunden wurde
-                    //erzeuge ein input element dafür. 
-                    if (scriptArray[j] == solutionArray[i])
+                    if (solutionTermCounter < solutionArray.Length && lineArray[wordCounter].ToLower().Trim() == solutionArray[solutionTermCounter])
                     {
-                        fileContent += $"\r\n<!--{solutionArray[i]}-->\r\n<br /><input type=\"text\" name=\"param{i}\" id=\"param{i}\" />\r\n";
-                        j++;
-                        break;
-                    }
-                    else if (string.IsNullOrEmpty(scriptArray[j]))
-                    {
-                        j++;
-                        continue;
+                        solution += $"\r\n<!--{solutionArray[solutionTermCounter]}-->\r\n<input type=\"text\" name=\"param{solutionTermCounter}\" id=\"param{solutionTermCounter}\" />\r\n";
+                        wordCounter++;
+                        solutionTermCounter++;
                     }
                     else
                     {
-                        if (scriptArray[j].Contains('@'))
+                        if (lineArray[wordCounter].Contains('@'))
                         {
-                            var index = scriptArray[j].IndexOf('@');
-                            var doubleAtString = scriptArray[j].Remove(index) + '@' + scriptArray[j].Substring(index);
-                            fileContent += $"<span> {doubleAtString} </span>";
+                            var index = lineArray[wordCounter].IndexOf('@');
+                            var doubleAtString = lineArray[wordCounter].Remove(index) + '@' + lineArray[wordCounter].Substring(index);
+                            solution += $"<span> {doubleAtString} </span>";
                         }
                         else
                         {
                             //if keyword, color!
-                            fileContent += $"<span> {scriptArray[j]} </span>";
+                            solution += $"<span> {lineArray[wordCounter]} </span>";
                         }
-                        j++;
+                        wordCounter++;
                     }
                 }
             }
+            fileContent += solution;
             //body ende
 
             //footer
-            fileContent += "</div>\r\n" +
+            fileContent += "\r\n</div>\r\n" +
                 "<input type=\"hidden\" name=\"solutionString\" id =\"solutionString\"/>\r\n" +
                 "<input type=\"submit\" class=\"btn-sm btn-primary\" value=\"Check\"/>\r\n</div>\r\n}";
             //footer ende
