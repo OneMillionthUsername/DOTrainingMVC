@@ -3,7 +3,7 @@ SELECT * FROM [Order Details]
 SELECT * FROM Products
 GO
 
---berechne in einer Funktion die Summe des Warenwertes eines Produktes im Lager.
+--Berechne in einer Funktion die Summe des Warenwertes eines Produktes im Lager.
 
 CREATE OR ALTER FUNCTION fnGesamtwarenwert(@ProductId INT)
 RETURNS DECIMAL(18,2)

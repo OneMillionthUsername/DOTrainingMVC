@@ -15,7 +15,7 @@ namespace DOTrainingMVC.Controllers
         static readonly Random Rnd = new Random((int)DateTime.Now.Ticks & 0x0000FFFF);
         
         //get the count of the views
-        static readonly int NumberOfQuestions = Directory.GetFiles("./Views/QuestionProgress").Where(fileName => fileName.Contains("Frage")).ToArray().Length;
+        static int NumberOfQuestions = Directory.GetFiles("./Views/QuestionProgress").Where(fileName => fileName.Contains("Frage")).ToArray().Length;
         static bool IsRandom = false;
 
         public IActionResult Welcome()
@@ -78,31 +78,36 @@ namespace DOTrainingMVC.Controllers
         {
             return View();
         }
+        /// <summary>
+        /// Erzeugt eine neue Ansicht und übergibt <paramref name="solutionTerms"/> (Lösungsarray), <paramref name="questionDescription"/> (die Fragenbeschreibung) und <paramref name="script"/> (das Lösungsscript) dem DOM.
+        /// </summary>
+        /// <param name="questionDescription"></param>
+        /// <param name="script"></param>
+        /// <param name="solutionTerms"></param>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult QuestionGenerator(string questionDescription, string script, string solutionTerms)
         {
-            //erstelle eine neue View
-            //mit <form>
-            //entferne alle Lösungsterme aus dem Script und ersetze sie mit einem "Trennzeichen"
-            //Zwischen den Trennzeichen sind die <span> Elemente. 
-            //Die Trennzeichen werden selbst durch <input> Elemente ersetzt.
-
-            //string für filewrite.
             string[] solutionArray = solutionTerms.Split(',');
-            string[] scriptArray = script.Split(' ', '\r', '\n', '\t', '(', ')');
+            string[] scriptArray = script.Split(' ', '\r', '\n', '\t'/*, '(', ')'*/);
+
+            //Pfad + Dateiname für file create.
             string path = $"./Views/QuestionProgress/Frage{NumberOfQuestions + 1}.cshtml";
 
             //solution array trimmen und als string an validateForm übergeben
             string solutionAsParam = "[";
             for (int i = 0; i < solutionArray.Length; i++)
             {
-                solutionAsParam += $"'{solutionArray[i].Trim()}',";
+                var temp = solutionArray[i].Trim();
+                solutionAsParam += $"'{temp}',";
+                solutionArray[i] = temp;
             }
             solutionAsParam = solutionAsParam.Substring(0, solutionAsParam.Length - 1) + "]";
 
             string fileContent = "";
             int j = 0;
 
+            //header
             fileContent += "@model int\r\n" +
                 "@{\r\n" +
                 "\tViewData[\"Title\"] = \"Frage \" + Model;\r\n" +
@@ -113,12 +118,16 @@ namespace DOTrainingMVC.Controllers
                 $"new {{ onsubmit = \"return validateForm({solutionAsParam})\", autocomplete = \"off\" }}))\r\n" +
                 "{<div class=\"form-group\">\r\n" +
                 "<div id=\"solutionText\">\r\n";
+            //header ende
 
+
+            //body
             for (int i = 0; i < solutionArray.Length; i++)
             {
-                solutionArray[i] = solutionArray[i].Trim();
                 while(j <= scriptArray.Length)
                 {
+                    //wenn Lösungswort im Script gefunden wurde
+                    //erzeuge ein input element dafür. 
                     if (scriptArray[j] == solutionArray[i])
                     {
                         fileContent += $"\r\n<!--{solutionArray[i]}-->\r\n<br /><input type=\"text\" name=\"param{i}\" id=\"param{i}\" />\r\n";
@@ -134,21 +143,25 @@ namespace DOTrainingMVC.Controllers
                     {
                         if (scriptArray[j].Contains('@'))
                         {
-                            fileContent += $"<span>@{scriptArray[j]}</span>";
+                            fileContent += $"<span>@{scriptArray[j]} </span>";
                         }
                         else
                         {
-                            fileContent += $"<span>{scriptArray[j]}</span>";
+                            fileContent += $"<span>{scriptArray[j]} </span>";
                         }
                         j++;
                     }
                 }
             }
+            //body ende
 
+            //footer
             fileContent += "</div>\r\n" +
                 "<input type=\"hidden\" name=\"solutionString\" id =\"solutionString\"/>\r\n" +
                 "<input type=\"submit\" class=\"btn-sm btn-primary\" value=\"Check\"/>\r\n</div>\r\n}";
-            //lösche den Inhalt
+            //footer ende
+
+            //lösche den Inhalt, vllt um files zu überschreiben, die bereits existieren.
             if (System.IO.File.Exists(path))
             {
                 using (FileStream fs = new FileStream(path, FileMode.Truncate))
@@ -162,6 +175,8 @@ namespace DOTrainingMVC.Controllers
                 
                 fs.Write(Encoding.ASCII.GetBytes(fileContent));
             }
+            NumberOfQuestions++;
+            ViewBag.NumberOfQuestions = NumberOfQuestions;
 
             return RedirectToAction("Frage");
         }
