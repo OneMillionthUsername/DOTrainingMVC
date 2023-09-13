@@ -21,7 +21,9 @@
             @if (ViewData["ShowSkipButton"] != null && (bool)ViewData["ShowSkipButton"] == true)
             {
                 <a href="/QuestionProgress/Frage" class="btn btn-primary">Skip</a>
+                <a href="/QuestionProgress/Welcome" class="btn btn-primary">Home</a>
             }
+
             <br />Frage:
             @{
                 if (ViewBag.NumberOfQuestions != null && ViewBag.NumberOfQuestions > 0)

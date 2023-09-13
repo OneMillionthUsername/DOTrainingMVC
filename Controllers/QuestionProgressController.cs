@@ -35,7 +35,8 @@ namespace DOTrainingMVC.Controllers
 
         public IActionResult Frage(bool? israndom, int qNum = 0)
         {
-            //jump to question
+            //jump to question5
+
             if (qNum > 0)
             {
                 QuestionNumber = qNum;
