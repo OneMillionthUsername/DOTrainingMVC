@@ -134,6 +134,7 @@ namespace DOTrainingMVC.Controllers
                 {
                     if (solutionTermCounter < solutionArray.Length && lineArray[wordCounter].ToLower().Trim() == solutionArray[solutionTermCounter])
                     {
+//kann ich nicht einfach vor jedem Lösungswort und am Schluss </span> setzen?
                         solution += $"\r\n<!--{solutionArray[solutionTermCounter]}-->\r\n<input type=\"text\" name=\"param{solutionTermCounter}\" id=\"param{solutionTermCounter}\" />\r\n";
                         wordCounter++;
                         solutionTermCounter++;
