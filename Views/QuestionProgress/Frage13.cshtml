@@ -13,14 +13,18 @@ Berechne in einer Funktion die Summe des Warenwertes eines Produktes im Lager.
 <br /><input type="text" name="param0" id="param0" />
 <span>OR </span><span>ALTER </span>
 <!--FUNCTION-->
-<br /><input type="text" name="param1" id="param1" />
-<span>@fnGesamtwarenwert(@ProductId </span><span>INT) </span>
+<input type="text" name="param1" id="param1" />
+<span>fnGesamtwarenwert(@@ProductId INT) </span>
 <!--RETURNS-->
 <br /><input type="text" name="param2" id="param2" />
-<span>DECIMAL(18,2) </span><span>AS </span>
+<span>DECIMAL(18,2) </span>
+<br /><span>AS </span>
 <!--BEGIN-->
 <br /><input type="text" name="param3" id="param3" />
-<span>DECLARE </span><span>@@ret </span><span>int; </span><span>SELECT </span><span>@@ret </span><span>= </span><span>Unitprice </span><span>* </span><span>UnitsInStock </span><span>FROM </span><span>Products </span><span>WHERE </span><span>ProductID </span><span>= </span><span>@@ProductId </span><span>RETURN </span><span>@@ret </span>
+<br /><span>DECLARE </span><span>@@ret </span><span>int; </span>
+<br /><span>SELECT </span><span>@@ret </span><span>= </span><span>Unitprice </span><span>* </span><span>UnitsInStock </span><span>FROM </span><span>Products </span>
+	<br /><span>WHERE </span><span>ProductID </span><span>= </span><span>@@ProductId </span>
+	<br /><span>RETURN </span><span>@@ret </span>
 <!--END-->
 <br /><input type="text" name="param4" id="param4" />
 </div>

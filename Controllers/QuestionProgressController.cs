@@ -13,7 +13,7 @@ namespace DOTrainingMVC.Controllers
         static int QuestionNumber { get; set; }
         //public static int QuestionCounter { get; set; }
         static readonly Random Rnd = new Random((int)DateTime.Now.Ticks & 0x0000FFFF);
-        
+
         //get the count of the views
         static int NumberOfQuestions = Directory.GetFiles("./Views/QuestionProgress").Where(fileName => fileName.Contains("Frage")).ToArray().Length;
         static bool IsRandom = false;
@@ -48,7 +48,7 @@ namespace DOTrainingMVC.Controllers
                 IsRandom = false;
                 QuestionNumber = 0;
             }
-            if (!IsRandom && !(qNum > 0)) 
+            if (!IsRandom && !(qNum > 0))
             {
                 QuestionNumber++; //increment linear question progression
                 if (QuestionNumber > NumberOfQuestions) //if overflow, reset
@@ -56,7 +56,7 @@ namespace DOTrainingMVC.Controllers
                     return RedirectToAction(nameof(Welcome));
                 }
             }
-            else if(IsRandom)
+            else if (IsRandom)
             {
                 QuestionNumber = Rnd.Next(1, NumberOfQuestions + 1); //update random question number
             }
@@ -89,7 +89,43 @@ namespace DOTrainingMVC.Controllers
         public IActionResult QuestionGenerator(string questionDescription, string script, string solutionTerms)
         {
             string[] solutionArray = solutionTerms.Split(',');
-            string[] scriptArray = script.Split(' ', '\r', '\n', '\t'/*, '(', ')'*/);
+            script = script.Replace("\r\n", "<br />");
+            string[] scriptArray = script.Split("<br />");
+            string solution = "";
+            int l = 0;
+
+            for (int i = 0; i < scriptArray.Length; i++)
+            {
+                solutionArray[i] = solutionArray[i].Trim();
+                string[] temp = scriptArray[i].Split(' ');
+
+                while (l < temp.Length)
+                {
+                    if (temp[l] == solutionArray[i])
+                    {
+                        solution += $"\r\n<!--{solutionArray[i]}-->\r\n<br /><input type=\"text\" name=\"param{i}\" id=\"param{i}\" />\r\n";
+                        l++;
+                        break;
+                    }
+                    else
+                    {
+                        if (temp[l].Contains('@'))
+                        {
+                            var index = temp[l].IndexOf('@');
+                            var doubleAtString = temp[l].Remove(index) + '@' + temp[l].Substring(index);
+                            solution += $"<span> {doubleAtString} </span>";
+                        }
+                        else
+                        {
+                            //if keyword, color!
+                            solution += $"<span> {temp[l]} </span>";
+                        }
+                        l++;
+                    }
+                }
+            }
+
+            //script.Split(' ', '\r', '\n', '\t'/*, '(', ')'*/);
 
             //Pfad + Dateiname für file create.
             string path = $"./Views/QuestionProgress/Frage{NumberOfQuestions + 1}.cshtml";
@@ -114,7 +150,7 @@ namespace DOTrainingMVC.Controllers
                 "}\r\n" +
                 $"<h2>\r\n{questionDescription}\r\n" +
                 " </h2>\r\n" +
-                "@using (Html.BeginForm(\"ValidateAnswers\", \"QuestionProgress\", FormMethod.Get,"+
+                "@using (Html.BeginForm(\"ValidateAnswers\", \"QuestionProgress\", FormMethod.Get," +
                 $"new {{ onsubmit = \"return validateForm({solutionAsParam})\", autocomplete = \"off\" }}))\r\n" +
                 "{<div class=\"form-group\">\r\n" +
                 "<div id=\"solutionText\">\r\n";
@@ -124,7 +160,7 @@ namespace DOTrainingMVC.Controllers
             //body
             for (int i = 0; i < solutionArray.Length; i++)
             {
-                while(j <= scriptArray.Length)
+                while (j <= scriptArray.Length)
                 {
                     //wenn Lösungswort im Script gefunden wurde
                     //erzeuge ein input element dafür. 
@@ -143,11 +179,14 @@ namespace DOTrainingMVC.Controllers
                     {
                         if (scriptArray[j].Contains('@'))
                         {
-                            fileContent += $"<span>@{scriptArray[j]} </span>";
+                            var index = scriptArray[j].IndexOf('@');
+                            var doubleAtString = scriptArray[j].Remove(index) + '@' + scriptArray[j].Substring(index);
+                            fileContent += $"<span> {doubleAtString} </span>";
                         }
                         else
                         {
-                            fileContent += $"<span>{scriptArray[j]} </span>";
+                            //if keyword, color!
+                            fileContent += $"<span> {scriptArray[j]} </span>";
                         }
                         j++;
                     }
@@ -167,12 +206,12 @@ namespace DOTrainingMVC.Controllers
                 using (FileStream fs = new FileStream(path, FileMode.Truncate))
                 {
                     // Der FileStream löscht den Inhalt automatisch.
-                } 
+                }
             }
             //create view file
             using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
             {
-                
+
                 fs.Write(Encoding.ASCII.GetBytes(fileContent));
             }
             NumberOfQuestions++;
