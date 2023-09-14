@@ -164,11 +164,11 @@ namespace DOTrainingMVC.Controllers
                         }
                         if (solutionTermsArray[solutionTermNumber] == ">=")
                         {
-                            solutionTermsArray[solutionTermNumber] = "&gt=";
+                            solutionTermsArray[solutionTermNumber] = "&gt;=";
                         }
                         if (solutionTermsArray[solutionTermNumber] == "<=")
                         {
-                            solutionTermsArray[solutionTermNumber] = "&lt=";
+                            solutionTermsArray[solutionTermNumber] = "&lt;=";
                         }
                         solution += $"\r\n<!--{solutionTermsArray[solutionTermNumber]}-->\r\n<input type=\"text\" name=\"param{solutionTermNumber}\" id=\"param{solutionTermNumber}\" />\r\n";
                         wordNumber++;
