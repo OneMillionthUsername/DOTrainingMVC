@@ -89,19 +89,18 @@ namespace DOTrainingMVC.Controllers
         [HttpPost]
         public IActionResult QuestionGenerator(string questionDescription, string script, string solutionTerms)
         {
+            //init
             string[] solutionTermsArray = solutionTerms.Split(',');
             script = script.Replace("\r\n", "<br />");
             string[] scriptLines = script.Split("<br />");
             string solution = "";
             string fileContent = "";
-
-            //Pfad + Dateiname für file create.
             string path = $"./Views/QuestionProgress/Frage{NumberOfQuestions + 1}.cshtml";
 
             //solution array trimmen und als list-string an validateForm übergeben
             string solutionAsParamsList = GetParamsListForJS(solutionTermsArray);
 
-            //header
+            //generate header HTML
             fileContent += "@model int\r\n" +
                 "@{\r\n" +
                 "\tViewData[\"Title\"] = \"Frage \" + Model;\r\n" +
@@ -112,7 +111,7 @@ namespace DOTrainingMVC.Controllers
                 "{\r\n<div class=\"form-group\">\r\n<div id=\"solutionText\">\r\n";
             //header ende
 
-            //body
+            //generate body HTML
             int solutionTermNumber = 0;
             for (int i = 0; i < solutionTermsArray.Length; i++)
             {
@@ -120,27 +119,30 @@ namespace DOTrainingMVC.Controllers
             }
 
             bool setSpan = false;
-            // Vor und nach Klammern space einfügen. 
+            
+            //main loop - loop all scriptlines and manipulate them, create the HTML DOM.
             for (int i = 0; i < scriptLines.Length; i++)
             {
-                //check line for brackets
                 char[] specialChars = { '(', ')', ';', ',', '.' };
+                //check every script line for special characters
                 for (int j = 0; j < specialChars.Length; j++)
                 {
                     if (string.IsNullOrEmpty(scriptLines[i])) continue;
+
                     if (scriptLines[i].Contains(specialChars[j]))
                     {
-                        int index = 0;
-                        int count = scriptLines[i].Count(c => c == specialChars[j]);
-                        int loop = 0;
+                        int specialCharsCount = scriptLines[i].Count(c => c == specialChars[j]);
+                        int count = 0;
                         int charLoop = 0;
-                        while (loop < count)
+
+                        //check every single character to catch multiple occurences.
+                        //maybe use recursion instead?
+                        while (count < specialCharsCount)
                         {
                             if (scriptLines[i][charLoop] == specialChars[j])
                             {
-                                index = charLoop;
-                                scriptLines[i] = scriptLines[i].Remove(index) + ' ' + scriptLines[i].Substring(index, 1) + ' ' + scriptLines[i].Substring(index + 1);
-                                loop++;
+                                scriptLines[i] = scriptLines[i].Remove(charLoop) + ' ' + scriptLines[i].Substring(charLoop, 1) + ' ' + scriptLines[i].Substring(charLoop + 1);
+                                count++;
                                 charLoop++; //weil derIndex des Chars um 1 nach rechts verschoben wird, muss danach +2 vom gegenwärtigen Index aus gesucht werden.
                             }
                             charLoop++;
@@ -148,8 +150,8 @@ namespace DOTrainingMVC.Controllers
                     }
                 }
 
+                //gehe jedes Wort in einer Zeile durch und bestimme seinen synatktischen Platz im HTML DOM.
                 string[] scriptLine = scriptLines[i].Split(' ');
-
                 int wordNumber = 0;
                 while (wordNumber < scriptLine.Length)
                 {
@@ -186,11 +188,11 @@ namespace DOTrainingMVC.Controllers
                             var doubleAtString = scriptLine[wordNumber].Remove(index) + '@' + scriptLine[wordNumber].Substring(index);
                             if (setSpan)
                             {
-                                solution += $"{doubleAtString}"; //<- wann brauch ich das closing tag wirklich?!
+                                solution += $"{doubleAtString}"; 
                             }
                             else
                             {
-                                solution += $"<span> {doubleAtString}"; //<- wann brauch ich das closing tag wirklich?!
+                                solution += $"<span> {doubleAtString}"; 
                                 setSpan = true;
                             }
                         }
@@ -198,7 +200,7 @@ namespace DOTrainingMVC.Controllers
                         {
                             if (setSpan)
                             {
-                                solution += $" {scriptLine[wordNumber]} "; //<- wann brauch ich das closing tag wirklich?!
+                                solution += $" {scriptLine[wordNumber]} ";
                             }
                             else
                             {
@@ -210,6 +212,8 @@ namespace DOTrainingMVC.Controllers
                         wordNumber++;
                     }
                 }
+
+                //line endings
                 if (setSpan)
                 {
                     solution += "</span><br />";
@@ -223,7 +227,7 @@ namespace DOTrainingMVC.Controllers
             fileContent += solution;
             //body ende
 
-            //footer
+            //generate footer HTML
             fileContent += "\r\n</div>\r\n" +
                 "<input type=\"hidden\" name=\"solutionString\" id =\"solutionString\"/>\r\n" +
                 "<input type=\"submit\" class=\"btn-sm btn-primary\" value=\"Check\"/>\r\n</div>\r\n}";
