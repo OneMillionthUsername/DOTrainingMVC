@@ -91,22 +91,15 @@ namespace DOTrainingMVC.Controllers
         {
             string[] solutionArray = solutionTerms.Split(',');
             script = script.Replace("\r\n", "<br />");
-            string[] scriptArray = script.Split("<br />");
+            string[] scriptLines = script.Split("<br />");
             string solution = "";
             string fileContent = "";
 
             //Pfad + Dateiname für file create.
             string path = $"./Views/QuestionProgress/Frage{NumberOfQuestions + 1}.cshtml";
 
-            //solution array trimmen und als string an validateForm übergeben
-            string solutionAsParamsList = "[";
-            for (int i = 0; i < solutionArray.Length; i++)
-            {
-                var temp = solutionArray[i].Trim();
-                solutionAsParamsList += $"'{temp}',";
-                solutionArray[i] = temp;
-            }
-            solutionAsParamsList = solutionAsParamsList.Substring(0, solutionAsParamsList.Length - 1) + "]";
+            //solution array trimmen und als list-string an validateForm übergeben
+            string solutionAsParamsList = GetParamsListForJS(solutionArray);
 
             //header
             fileContent += "@model int\r\n" +
@@ -127,10 +120,12 @@ namespace DOTrainingMVC.Controllers
             }
 
             bool setSpan = false;
-            for (int i = 0; i < scriptArray.Length; i++)
+            for (int i = 0; i < scriptLines.Length; i++)
             {
                 // Vor und nach Klammern space einfügen. 
-                string[] lineArray = scriptArray[i].Split(' ');
+                string[] lineArray = scriptLines[i].Split(' ');
+                //string[] lineArray = new string[];
+
                 //check line for brackets
                 char[] specialChars = { '(', ')', ';', ',', '=', '>', '<', '.' };
                 for (int k = 0; k < lineArray.Length; k++)
@@ -148,10 +143,16 @@ namespace DOTrainingMVC.Controllers
                                 lineArray[k] = lineArray[k].Remove(index) + ' ' + lineArray[k].Substring(index, 1) + ' ' + lineArray[k].Substring(index + 1);
                             }
                         }
-                    } 
+                    }
                 }
 
-                int wordCounter = 0; 
+                int lineArrayLength = 0;
+                for (int j = 0; j < lineArray.Length; j++)
+                {
+                    lineArrayLength += lineArray[j].Length;
+                }
+
+                int wordCounter = 0;
                 while (wordCounter < lineArray.Length)
                 {
                     if (solutionTermCounter < solutionArray.Length && lineArray[wordCounter].ToLower().Trim() == solutionArray[solutionTermCounter])
@@ -173,7 +174,7 @@ namespace DOTrainingMVC.Controllers
                         continue;
                     }
                     else
-                    {   
+                    {
                         if (lineArray[wordCounter].Contains('@'))
                         {
                             var index = lineArray[wordCounter].IndexOf('@');
@@ -240,6 +241,19 @@ namespace DOTrainingMVC.Controllers
             ViewBag.NumberOfQuestions = NumberOfQuestions;
 
             return RedirectToAction("Frage");
+        }
+
+        private static string GetParamsListForJS(string[] solutionArray)
+        {
+            string solutionAsParamsList = "[";
+            for (int i = 0; i < solutionArray.Length; i++)
+            {
+                var temp = solutionArray[i].Trim();
+                solutionAsParamsList += $"'{temp}',";
+                solutionArray[i] = temp;
+            }
+            solutionAsParamsList = solutionAsParamsList.Substring(0, solutionAsParamsList.Length - 1) + "]";
+            return solutionAsParamsList;
         }
     }
 }
