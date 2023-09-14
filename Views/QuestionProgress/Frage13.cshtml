@@ -1,0 +1,32 @@
+@model int
+@{
+	ViewData["Title"] = "Frage " + Model;
+}
+<h2>
+Berechne in einer Funktion die Summe des Warenwertes eines Produktes im Lager.
+</h2>
+@using (Html.BeginForm("ValidateAnswers", "QuestionProgress", FormMethod.Get,new { onsubmit = "return validateForm(['CREATE','FUNCTION','RETURNS','BEGIN','END'])", autocomplete = "off" }))
+{
+<div class="form-group">
+<div id="solutionText">
+
+<!--create-->
+<input type="text" name="param0" id="param0" />
+<span> OR  ALTER </span>
+<!--function-->
+<input type="text" name="param1" id="param1" />
+<span> fnGesamtwarenwert  ( @@ProductId INT  ) </span><br />
+<!--returns-->
+<input type="text" name="param2" id="param2" />
+<span> DECIMAL  (  18  ,  2  ) </span><br /><span> AS </span><br />
+<!--begin-->
+<input type="text" name="param3" id="param3" />
+<br /><span> 	DECLARE @@ret int  ; </span><br /><span> 	SELECT @@ret =  Unitprice  *  UnitsInStock  FROM  Products </span><br /><span> 	WHERE  ProductID  = @@ProductId</span><br /><span> 	RETURN @@ret</span><br />
+<!--end-->
+<input type="text" name="param4" id="param4" />
+<br /><span> GO </span><br />
+</div>
+<input type="hidden" name="solutionString" id ="solutionString"/>
+<input type="submit" class="btn-sm btn-primary" value="Check"/>
+</div>
+}

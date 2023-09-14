@@ -1,0 +1,35 @@
+@model int
+@{
+	ViewData["Title"] = "Frage " + Model;
+}
+<h2>
+Anzahl der Bestellungen pro Monat
+</h2>
+@using (Html.BeginForm("ValidateAnswers", "QuestionProgress", FormMethod.Get,new { onsubmit = "return validateForm(['month','count','group','year','order','MONTH'])", autocomplete = "off" }))
+{
+<div class="form-group">
+<div id="solutionText">
+<span> select  year  (  orderdate  )  Jahr  , </span>
+<!--month-->
+<input type="text" name="param0" id="param0" />
+<span> (  orderdate  )  Monat  , </span>
+<!--count-->
+<input type="text" name="param1" id="param1" />
+<span> (  orderid  )  Bestellungen  from  Orders </span><br />
+<!--group-->
+<input type="text" name="param2" id="param2" />
+<span> by </span>
+<!--year-->
+<input type="text" name="param3" id="param3" />
+<span> (  orderdate  )  ,  MONTH  (  orderdate  ) </span><br />
+<!--order-->
+<input type="text" name="param4" id="param4" />
+<span> by  year  (  orderdate  )  , </span>
+<!--month-->
+<input type="text" name="param5" id="param5" />
+<span> (  orderdate  ) </span><br />
+</div>
+<input type="hidden" name="solutionString" id ="solutionString"/>
+<input type="submit" class="btn-sm btn-primary" value="Check"/>
+</div>
+}

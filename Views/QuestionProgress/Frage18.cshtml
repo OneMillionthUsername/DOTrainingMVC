@@ -1,0 +1,21 @@
+@model int
+@{
+	ViewData["Title"] = "Frage " + Model;
+}
+<h2>
+Prlduktliste (Name, ID) und Preis
+von allen Produkten die billiger als 20 sind
+</h2>
+@using (Html.BeginForm("ValidateAnswers", "QuestionProgress", FormMethod.Get,new { onsubmit = "return validateForm(['<'])", autocomplete = "off" }))
+{
+<div class="form-group">
+<div id="solutionText">
+<span> select  [ProductName]  ,  [ProductID]  ,  [UnitPrice]  from  [dbo]  .  [Products] </span><br /><span> where  UnitPrice </span>
+<!--<-->
+<input type="text" name="param0" id="param0" />
+<span> 20 </span><br />
+</div>
+<input type="hidden" name="solutionString" id ="solutionString"/>
+<input type="submit" class="btn-sm btn-primary" value="Check"/>
+</div>
+}

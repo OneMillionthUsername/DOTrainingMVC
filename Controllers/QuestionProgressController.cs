@@ -89,7 +89,7 @@ namespace DOTrainingMVC.Controllers
         [HttpPost]
         public IActionResult QuestionGenerator(string questionDescription, string script, string solutionTerms)
         {
-            string[] solutionArray = solutionTerms.Split(',');
+            string[] solutionTermsArray = solutionTerms.Split(',');
             script = script.Replace("\r\n", "<br />");
             string[] scriptLines = script.Split("<br />");
             string solution = "";
@@ -99,7 +99,7 @@ namespace DOTrainingMVC.Controllers
             string path = $"./Views/QuestionProgress/Frage{NumberOfQuestions + 1}.cshtml";
 
             //solution array trimmen und als list-string an validateForm übergeben
-            string solutionAsParamsList = GetParamsListForJS(solutionArray);
+            string solutionAsParamsList = GetParamsListForJS(solutionTermsArray);
 
             //header
             fileContent += "@model int\r\n" +
@@ -113,72 +113,77 @@ namespace DOTrainingMVC.Controllers
             //header ende
 
             //body
-            int solutionTermCounter = 0;
-            for (int i = 0; i < solutionArray.Length; i++)
+            int solutionTermNumber = 0;
+            for (int i = 0; i < solutionTermsArray.Length; i++)
             {
-                solutionArray[i] = solutionArray[i].Trim().ToLower();
+                solutionTermsArray[i] = solutionTermsArray[i].Trim().ToLower();
             }
 
             bool setSpan = false;
+            // Vor und nach Klammern space einfügen. 
             for (int i = 0; i < scriptLines.Length; i++)
             {
-                // Vor und nach Klammern space einfügen. 
-                string[] lineArray = scriptLines[i].Split(' ');
-                //string[] lineArray = new string[];
-
                 //check line for brackets
-                char[] specialChars = { '(', ')', ';', ',', '=', '>', '<', '.' };
-                for (int k = 0; k < lineArray.Length; k++)
+                char[] specialChars = { '(', ')', ';', ',', '.' };
+                for (int j = 0; j < specialChars.Length; j++)
                 {
-                    if (string.IsNullOrEmpty(lineArray[k])) continue;
-
-                    for (int l = 0; l < specialChars.Length; l++)
+                    if (string.IsNullOrEmpty(scriptLines[i])) continue;
+                    if (scriptLines[i].Contains(specialChars[j]))
                     {
-                        if (lineArray[k].Contains(specialChars[l]))
+                        int index = 0;
+                        int count = scriptLines[i].Count(c => c == specialChars[j]);
+                        int loop = 0;
+                        int charLoop = 0;
+                        while (loop < count)
                         {
-                            int index = lineArray[k].IndexOf(specialChars[l]);
-                            if (index != -1)
+                            if (scriptLines[i][charLoop] == specialChars[j])
                             {
-                                //lineArray.split space
-                                lineArray[k] = lineArray[k].Remove(index) + ' ' + lineArray[k].Substring(index, 1) + ' ' + lineArray[k].Substring(index + 1);
+                                index = charLoop;
+                                scriptLines[i] = scriptLines[i].Remove(index) + ' ' + scriptLines[i].Substring(index, 1) + ' ' + scriptLines[i].Substring(index + 1);
+                                loop++;
+                                charLoop++; //weil derIndex des Chars um 1 nach rechts verschoben wird, muss danach +2 vom gegenwärtigen Index aus gesucht werden.
                             }
+                            charLoop++;
                         }
                     }
                 }
 
-                int lineArrayLength = 0;
-                for (int j = 0; j < lineArray.Length; j++)
-                {
-                    lineArrayLength += lineArray[j].Length;
-                }
+                string[] scriptLine = scriptLines[i].Split(' ');
 
-                int wordCounter = 0;
-                while (wordCounter < lineArray.Length)
+                int wordNumber = 0;
+                while (wordNumber < scriptLine.Length)
                 {
-                    if (solutionTermCounter < solutionArray.Length && lineArray[wordCounter].ToLower().Trim() == solutionArray[solutionTermCounter])
+                    if (solutionTermNumber < solutionTermsArray.Length && scriptLine[wordNumber].ToLower().Trim() == solutionTermsArray[solutionTermNumber])
                     {
-                        //kann ich nicht einfach vor jedem Lösungswort und am Schluss </span> setzen?
                         if (setSpan)
                         {
                             solution += "</span>";
                             setSpan = false;
                         }
-                        solution += $"\r\n<!--{solutionArray[solutionTermCounter]}-->\r\n<input type=\"text\" name=\"param{solutionTermCounter}\" id=\"param{solutionTermCounter}\" />\r\n";
-                        wordCounter++;
-                        solutionTermCounter++;
+                        if (solutionTermsArray[solutionTermNumber] == ">=")
+                        {
+                            solutionTermsArray[solutionTermNumber] = "&gt=";
+                        }
+                        if (solutionTermsArray[solutionTermNumber] == "<=")
+                        {
+                            solutionTermsArray[solutionTermNumber] = "&lt=";
+                        }
+                        solution += $"\r\n<!--{solutionTermsArray[solutionTermNumber]}-->\r\n<input type=\"text\" name=\"param{solutionTermNumber}\" id=\"param{solutionTermNumber}\" />\r\n";
+                        wordNumber++;
+                        solutionTermNumber++;
                         continue;
                     }
-                    if (string.IsNullOrEmpty(lineArray[wordCounter]))
+                    if (string.IsNullOrEmpty(scriptLine[wordNumber]))
                     {
-                        wordCounter++;
+                        wordNumber++;
                         continue;
                     }
                     else
                     {
-                        if (lineArray[wordCounter].Contains('@'))
+                        if (scriptLine[wordNumber].Contains('@'))
                         {
-                            var index = lineArray[wordCounter].IndexOf('@');
-                            var doubleAtString = lineArray[wordCounter].Remove(index) + '@' + lineArray[wordCounter].Substring(index);
+                            var index = scriptLine[wordNumber].IndexOf('@');
+                            var doubleAtString = scriptLine[wordNumber].Remove(index) + '@' + scriptLine[wordNumber].Substring(index);
                             if (setSpan)
                             {
                                 solution += $"{doubleAtString}"; //<- wann brauch ich das closing tag wirklich?!
@@ -193,16 +198,16 @@ namespace DOTrainingMVC.Controllers
                         {
                             if (setSpan)
                             {
-                                solution += $" {lineArray[wordCounter]} "; //<- wann brauch ich das closing tag wirklich?!
+                                solution += $" {scriptLine[wordNumber]} "; //<- wann brauch ich das closing tag wirklich?!
                             }
                             else
                             {
-                                solution += $"<span> {lineArray[wordCounter]} ";
+                                solution += $"<span> {scriptLine[wordNumber]} ";
                                 setSpan = true;
                             }
                             //if keyword, color!
                         }
-                        wordCounter++;
+                        wordNumber++;
                     }
                 }
                 if (setSpan)

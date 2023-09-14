@@ -1,0 +1,24 @@
+@model int
+@{
+	ViewData["Title"] = "Frage " + Model;
+}
+<h2>
+Alle Bestellungen au?er der ShipVia 1 und 2 ausgeben
+gew?nschte Ausgabe: OrderDate, OderId, ShipVia, ShipCountry
+</h2>
+@using (Html.BeginForm("ValidateAnswers", "QuestionProgress", FormMethod.Get,new { onsubmit = "return validateForm(['!=','!='])", autocomplete = "off" }))
+{
+<div class="form-group">
+<div id="solutionText">
+<span> select  OrderDate  ,  OrderID  ,  ShipVia  ,  ShipCountry  from  [dbo]  .  [Orders] </span><br /><span> where  ShipVia </span>
+<!--!=-->
+<input type="text" name="param0" id="param0" />
+<span> 1  and  ShipVia </span>
+<!--!=-->
+<input type="text" name="param1" id="param1" />
+<span> 2 </span><br />
+</div>
+<input type="hidden" name="solutionString" id ="solutionString"/>
+<input type="submit" class="btn-sm btn-primary" value="Check"/>
+</div>
+}
