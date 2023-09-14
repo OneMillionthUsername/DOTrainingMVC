@@ -15,3 +15,16 @@
         <input type="submit" name="submit" id="submit" value="Generate" class="btn btn-primary" />
     </form>
 </div>
+
+<h3>How to use it?</h3>
+<p>
+    Im ersten Feld kommt deine "Frage" oder Anweisung rein.
+    Im zweiten kommt ein "geprüftes" SQL Script rein, also ein Script, das richtig geschrieben ist und funktioniert.
+    Im letzten Feld kopiert man die Wörter rein, die man dann im Trainingsmodus erraten will.
+    <b><i>WICHTIG:</i></b>
+    Es kann immer nur nach einem <b>GANZEN</b> Wort gesucht werden, also "group by" oder "order by" müssen in "group" und "by" aufgeteilt werden.
+    Oder man sucht einfach nur nach "group" oder "order", das "by" bleibt dabei einfach vorgegeben.
+    Alle Suchbegriffe <b><i>müssen</i></b> durch einen Beistrich getrennt sein: SELECT, WHERE, FROM. In diesem Beispiel wird ein Trainingsscript
+    generiert, worin nach den Begriffen "SELECT, WHERE, FROM" gesucht wird. 
+    Leerzeichen oder Groß/Kleinschreibung spielen keine Rolle. Operatoren werden einfach zusammenhängend und durch Beistriche getrennt eingegeben.
+    zB: "SELECT, >=, AND, <=, !=, =" Jeder Operator nach dem Beistrich wird ein Feld erzeugen, das ihn als Antwort erwartet.</p>

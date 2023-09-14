@@ -20,7 +20,7 @@
                 <a href="/QuestionProgress/Frage" class="btn btn-primary">Skip</a>
                 <a href="/QuestionProgress/Welcome" class="btn btn-primary">Home</a>
             }
-            @if (!Url.Action().Contains("ValidateAnswers"))
+            @if (Url.Action().Contains("Frage") || Url.Action().Contains("Welcome"))
             {
                 <br /> <span>Frage:</span>
 
@@ -33,6 +33,19 @@
                 }
 
             }
+            <p>Dies ist eine SQL Script Übungsseite, wo man seine SQL skills verbessern kann.
+            <b><i>How to use?</i></b>
+            Ganz oben befindet sich die Anweisung, die man in SQL ausführen sollte.
+            Danach kommt ein "gelöchertes Script", wo es gilt die fehlenden Stücke auszufüllen.
+            Manchmal sind es keywords wie "SELECT" oder "WHERE", manchmal Operatoren
+            wie ">=" oder "<=". Man kann die "Löcher" und den "passenden Inhalt", also das Lösungswort, 
+            mit dem Generator auch selbst definieren. <b>Wichtig:</b> das Lösungswort darf nur aus <b><i>einem einzigen ganze Wort</i></b>
+            bestehen und es muss <b><i>identisch</i></b> mit seinem Zwilling im "Vorgabescript sein." <a href="/QuestionProgress/QuestionGenerator">Mehr dazu im Generator.</a>
+            
+            Solltest du mal nicht weiter wissen, dann schaue im HTML nach.
+
+            Viel Spaß!
+            </p>
         </main>
     </div>
 
