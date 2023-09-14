@@ -126,18 +126,46 @@ namespace DOTrainingMVC.Controllers
                 solutionArray[i] = solutionArray[i].Trim().ToLower();
             }
 
+            bool setSpan = false;
             for (int i = 0; i < scriptArray.Length; i++)
             {
+                // Vor und nach Klammern space einfügen. 
                 string[] lineArray = scriptArray[i].Split(' ');
+                //check line for brackets
+                char[] specialChars = { '(', ')', ';', ',', '=', '>', '<', '.' };
+                for (int k = 0; k < lineArray.Length; k++)
+                {
+                    if (string.IsNullOrEmpty(lineArray[k])) continue;
+
+                    for (int l = 0; l < specialChars.Length; l++)
+                    {
+                        if (lineArray[k].Contains(specialChars[l]))
+                        {
+                            int index = lineArray[k].IndexOf(specialChars[l]);
+                            if (index != -1)
+                            {
+                                //lineArray.split space
+                                lineArray[k] = lineArray[k].Remove(index) + ' ' + lineArray[k].Substring(index, 1) + ' ' + lineArray[k].Substring(index + 1);
+                            }
+                        }
+                    } 
+                }
+
                 int wordCounter = 0; 
                 while (wordCounter < lineArray.Length)
                 {
                     if (solutionTermCounter < solutionArray.Length && lineArray[wordCounter].ToLower().Trim() == solutionArray[solutionTermCounter])
                     {
-//kann ich nicht einfach vor jedem Lösungswort und am Schluss </span> setzen?
+                        //kann ich nicht einfach vor jedem Lösungswort und am Schluss </span> setzen?
+                        if (setSpan)
+                        {
+                            solution += "</span>";
+                            setSpan = false;
+                        }
                         solution += $"\r\n<!--{solutionArray[solutionTermCounter]}-->\r\n<input type=\"text\" name=\"param{solutionTermCounter}\" id=\"param{solutionTermCounter}\" />\r\n";
                         wordCounter++;
                         solutionTermCounter++;
+                        continue;
                     }
                     if (string.IsNullOrEmpty(lineArray[wordCounter]))
                     {
@@ -150,17 +178,41 @@ namespace DOTrainingMVC.Controllers
                         {
                             var index = lineArray[wordCounter].IndexOf('@');
                             var doubleAtString = lineArray[wordCounter].Remove(index) + '@' + lineArray[wordCounter].Substring(index);
-                            solution += $"<span> {doubleAtString} </span>"; //<- wann brauch ich das closing tag wirklich?!
+                            if (setSpan)
+                            {
+                                solution += $"{doubleAtString}"; //<- wann brauch ich das closing tag wirklich?!
+                            }
+                            else
+                            {
+                                solution += $"<span> {doubleAtString}"; //<- wann brauch ich das closing tag wirklich?!
+                                setSpan = true;
+                            }
                         }
                         else
                         {
+                            if (setSpan)
+                            {
+                                solution += $" {lineArray[wordCounter]} "; //<- wann brauch ich das closing tag wirklich?!
+                            }
+                            else
+                            {
+                                solution += $"<span> {lineArray[wordCounter]} ";
+                                setSpan = true;
+                            }
                             //if keyword, color!
-                            solution += $"<span> {lineArray[wordCounter]} </span>"; //<- wann brauch ich das closing tag wirklich?!
                         }
                         wordCounter++;
                     }
                 }
-                solution += "<br />";
+                if (setSpan)
+                {
+                    solution += "</span><br />";
+                    setSpan = false;
+                }
+                else
+                {
+                    solution += "<br />";
+                }
             }
             fileContent += solution;
             //body ende
@@ -182,7 +234,6 @@ namespace DOTrainingMVC.Controllers
             //create view file
             using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
             {
-
                 fs.Write(Encoding.ASCII.GetBytes(fileContent));
             }
             NumberOfQuestions++;

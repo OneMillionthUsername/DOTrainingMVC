@@ -26,10 +26,6 @@ WHERE ProductID = 1
 -- der Untergeordneten vom angegebenen Mitarbeiter 
 -- zurück gibt.
 
-SELECT * FROM Employees WHERE ReportsTo = 2
-SELECT COUNT(EmployeeID) FROM Employees WHERE ReportsTo = 2
--- 2022-09-07
-
 GO
 CREATE FUNCTION fnAnzahlUntergeordnete(@VorgesetzeId int)  
 RETURNS int   
