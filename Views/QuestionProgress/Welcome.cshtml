@@ -19,6 +19,7 @@
         Fragen Generator
         <a href="/QuestionProgress/QuestionGenerator" class="btn btn-primary mx-2 my-2">Start</a>
     </p>
+    <a href="#questions" data-bs-toggle="collapse" class="btn btn-primary mx-2 my-2">Fragen</a>
     <a href="#generalHowTo" data-bs-toggle="collapse" class="btn btn-primary mx-2 my-2">Help</a>
     <div id="generalHowTo" class="collapse">
         <br />
@@ -35,5 +36,20 @@
 
         <p>Solltest du mal nicht weiter kommen, kannst du die Frage überspringen oder im HTML nachschauen.</p>
         <p>Viel Spaß!</p>
+    </div>
+    <div id="questions" class="collapse">
+        @{
+            if (ViewBag.NumberOfQuestions != null && ViewBag.NumberOfQuestions > 0)
+            {
+                for (int i = 1; i <= ViewBag.NumberOfQuestions; i++)
+                {
+                    if ((i - 1) % 20 == 0)
+                    {
+                        @:<br />
+                    }
+                    <a href="/QuestionProgress/Frage?qNum=@i">@i</a>
+                }
+            }
+        }
     </div>
 </div>

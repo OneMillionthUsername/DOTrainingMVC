@@ -11,40 +11,45 @@
 <body>
     <header>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3" style="font-family: Consolas">
-            <div style="align-content:flex-start">
-                @RenderBody()
-            </div>
+    <div class="container-fluid border-sql blue">
 
-            @if (ViewData["ShowSkipButton"] != null && (bool)ViewData["ShowSkipButton"] == true)
-            {
-                <a href="/QuestionProgress/Frage" class="btn btn-primary">Skip</a> 
-                <a href="/QuestionProgress/Welcome" class="btn btn-primary">Home</a>
-            }
-            <div class="text-center">
-                <br />
-                @if (Url.Action().Contains("Frage") || ViewContext.RouteData.Values["action"].ToString() == "Welcome")
-            {
-                <a href="#questions" data-bs-toggle="collapse" class="btn btn-primary mx-2 my-2">Fragen</a>
-                @:<div id="questions" class="collapse">
-                    <br /> <span>Fragen</span>
+        <div class="row">
+            <div class="column side container-fluid"></div>
+            <div class="container-fluid column middle border-sql light-blue">
+                <main role="main" class="pb-3" style="font-family: Consolas">
+                    <div style="align-content:flex-start">
+                        @RenderBody()
+                    </div>
 
-                    if (ViewBag.NumberOfQuestions != null && ViewBag.NumberOfQuestions > 0)
+                    @if (ViewData["ShowSkipButton"] != null && (bool)ViewData["ShowSkipButton"] == true)
                     {
-                        for (int i = 1; i <= ViewBag.NumberOfQuestions; i++)
-                        {
-                            if ((i - 1) % 20 == 0)
-                            {
-                                @:<br />
-                            }
-                            <a href="/QuestionProgress/Frage?qNum=@i">@i</a>
-                        }
+                        <a href="/QuestionProgress/Frage" class="btn btn-primary">Skip</a>
+                        <a href="/QuestionProgress/Welcome" class="btn btn-primary">Home</a>
                     }
-                @:</div>
-            }
+                    <div class="text-center">
+                        <br />
+                        @if (Url.Action().Contains("Frage"))
+                        {
+                            <a href="#questions" data-bs-toggle="collapse" class="btn btn-primary mx-2 my-2">Fragen</a>
+                            @:<div id="questions" class="collapse">
+                                if (ViewBag.NumberOfQuestions != null && ViewBag.NumberOfQuestions > 0)
+                                {
+                                    for (int i = 1; i <= ViewBag.NumberOfQuestions; i++)
+                                    {
+                                        if ((i - 1) % 20 == 0)
+                                        {
+                                            @:<br />
+                                        }
+                                        <a href="/QuestionProgress/Frage?qNum=@i">@i</a>
+                                    }
+                                }
+                            @:</div>
+                        }
+                    </div>
+                </main>
             </div>
-        </main>
+            <div class="column side container-fluid"></div>
+        </div>
     </div>
 
     <footer class="border-top footer text-muted">
