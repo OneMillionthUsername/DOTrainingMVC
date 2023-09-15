@@ -170,7 +170,7 @@ namespace DOTrainingMVC.Controllers
                         {
                             solutionTermsArray[solutionTermNumber] = "&lt;=";
                         }
-                        solution += $"\r\n<!--{solutionTermsArray[solutionTermNumber]}-->\r\n<input type=\"text\" name=\"param{solutionTermNumber}\" id=\"param{solutionTermNumber}\" />\r\n";
+                        solution += $"\r\n<!--{solutionTermsArray[solutionTermNumber]}-->\r\n<input type=\"text\" name=\"param{solutionTermNumber}\" id=\"param{solutionTermNumber}\" class=\"my-1\" />\r\n";
                         wordNumber++;
                         solutionTermNumber++;
                         continue;
@@ -230,7 +230,7 @@ namespace DOTrainingMVC.Controllers
             //generate footer HTML
             fileContent += "\r\n</div>\r\n" +
                 "<input type=\"hidden\" name=\"solutionString\" id =\"solutionString\"/>\r\n" +
-                "<input type=\"submit\" class=\"btn-sm btn-primary\" value=\"Check\"/>\r\n</div>\r\n}";
+                "<input type=\"submit\" class=\"btn btn-primary my-2\" value=\"Check\"/>\r\n</div>\r\n}";
             //footer ende
 
             //lösche den Inhalt, vllt um files zu überschreiben, die bereits existieren.

@@ -19,14 +19,14 @@
 
             @if (ViewData["ShowSkipButton"] != null && (bool)ViewData["ShowSkipButton"] == true)
             {
-                <a href="/QuestionProgress/Frage" class="btn btn-primary mb-2 mr-2">Skip</a> 
-                <a href="/QuestionProgress/Welcome" class="btn btn-primary mb-2 mr-2">Home</a>
+                <a href="/QuestionProgress/Frage" class="btn btn-primary">Skip</a> 
+                <a href="/QuestionProgress/Welcome" class="btn btn-primary">Home</a>
             }
             <div class="text-center">
                 <br />
                 @if (Url.Action().Contains("Frage") || ViewContext.RouteData.Values["action"].ToString() == "Welcome")
             {
-                <a href="#questions" data-bs-toggle="collapse" class="btn btn-primary mb-2 mr-2">Fragen</a>
+                <a href="#questions" data-bs-toggle="collapse" class="btn btn-primary mx-2 my-2">Fragen</a>
                 @:<div id="questions" class="collapse">
                     <br /> <span>Fragen</span>
 

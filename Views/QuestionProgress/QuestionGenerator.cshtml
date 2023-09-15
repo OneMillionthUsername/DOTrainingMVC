@@ -2,31 +2,31 @@
     <form action="/QuestionProgress/QuestionGenerator/" method="post" class="form-group">
         <div>
             <label class="col-form-label">Fragebeschreibung</label><br />
-            <textarea class="form-control" name="questionDescription" id="questionDescription" rows="3"></textarea> <br />
+            <textarea class="form-control" name="questionDescription" id="questionDescription" rows="3" ></textarea> <br />
         </div>
         <div>
-            <label class="col-form-label">Voll ausgeschriebenes SQL script</label> <br />
-            <textarea class="form-control" name="script" id="script"></textarea> <br />
+            <label class="col-form-label">SQL script</label> <br />
+            <textarea class="form-control" name="script" id="script" rows="10"></textarea> <br />
         </div>
         <div>
             <label class="col-form-label">Liste der gesuchten Lösungsbegriffe</label> <br />
-            <input class="form-control" type="text" name="solutionTerms" id="solutionTerms" value="" /> <br />
+            <input class="form-control" type="text" name="solutionTerms" id="solutionTerms" /> <br />
         </div>
-        <input type="submit" name="submit" id="submit" value="Generate" class="btn btn-primary" />
+        <input type="submit" name="submit" id="submit" value="Generate" class="btn btn-primary mx-2 my-2" />
     </form>
 </div>
 <br />
-<a href="/QuestionProgress/Welcome" class="btn btn-primary mb-2 mr-2">Home</a>
+<a href="/QuestionProgress/Welcome" class="btn btn-primary mx-2 my-2">Home</a>
 <br />
 
-<a href="#generatorHowTo" data-bs-toggle="collapse" class="btn btn-primary mb-2 mr-2">Help</a> 
+<a href="#generatorHowTo" data-bs-toggle="collapse" class="btn btn-primary mx-2 my-2">Help</a> 
 <div id="generatorHowTo" class="collapse">
     <h3>How to use?</h3>
 
     <p>
-        Im ersten Feld kommt deine "Frage" oder Anweisung rein.<br />
+        Im ersten Feld kommt deine Frage oder Anweisung rein.<br />
         zB: <i>Zeige alle Kunden an.</i> <br />
-        Im zweiten kommt ein "geprüftes" SQL Script rein, also ein Script, das richtig geschrieben ist und funktionieren sollte.<br />
+        Im Zweiten kommt ein "geprüftes" SQL Script rein, also ein Script, das <i>syntaktisch</i> richtig ist und funktionieren sollte.<br />
         zB: <i>SELECT * FROM Costumers</i> <br />
         Im letzten Feld kopiert man die Wörter aus dem Script raus, die man dann im Trainingsmodus <b><i>erraten</i></b> will. <br />
         zB: <i>select, from</i> <br />
@@ -34,18 +34,18 @@
     <p><b><i>WICHTIG:</i></b></p>
     <p>
         Es kann immer nur nach einem <b>GANZEN</b> Wort gesucht werden, also 'GROUP BY', 'NOT NULL' oder 'ORDER BY' müssen in 'GROUP' und 'BY' aufgeteilt werden.
+        Die Antwort wird nur anahnd der Syntax der Lösungswörter evaluiert.
     </p>
     <p>
         Das Lösungswort muss <b><i>identisch</i></b> mit seinem Vorkommen im "Vorgabescript" sein.
         Aliase sind nicht erlaubt. <i>'DESC'</i> ist nicht gleichbedeutend wie <i>'DESCENDING'</i> und <i>'='</i> nicht mit <i>'like'</i>.
     </p>
     <p>
-        Alle Suchbegriffe <b><i>müssen</i></b> durch einen Beistrich getrennt sein: 'SELECT, WHERE, FROM'. In diesem Beispiel wird ein Trainingsscript
-        generiert, worin die Begriffe 'SELECT, WHERE, FROM' gesucht werden. Nach dem letzten Wort kommt kein Zeichen mehr, auch kein Punkt.
+        Alle Suchbegriffe <b><i>müssen</i></b> durch einen Beistrich getrennt sein: 'SELECT, FROM, WHERE'. Nach dem letzten Wort kommt kein Zeichen mehr, auch kein Punkt.
     </p>
     <p>
         Leerzeichen oder Groß/Kleinschreibung spielen keine Rolle.<br />
-        Operatoren werden einfach zusammenhängend und durch Beistriche getrennt eingegeben.<br />
-        zB: '>=, <=, !=, =, ___%' Jeder Operator nach dem Beistrich wird ein Feld erzeugen, das seine Vorgabe im Script als Antwort erwartet.
+        Operatoren mit mehreren Zeichen werden einfach zusammenhängend eingegeben.<br />
+        zB: '>=, <=, !=, =, ___%'
     </p>
 </div>

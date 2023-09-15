@@ -11,16 +11,16 @@ Eine Funktion schreiben, die die Anzahl der untergeordneten Mitarbeiter vom ange
 <div id="solutionText">
 <span> CREATE </span>
 <!--function-->
-<input type="text" name="param0" id="param0" />
+<input type="text" name="param0" id="param0" class="my-1"/>
 <span> fnAnzahlUntergeordnete  ( @@VorgesetzeId int  ) </span><br /><span> RETURNS  int </span><br /><span> AS  BEGIN </span><br /><span> RETURN  (  SELECT </span>
 <!--count-->
-<input type="text" name="param1" id="param1" />
+<input type="text" name="param1" id="param1" class="my-1"/>
 <span> (  EmployeeID  ) </span><br /><span> 		FROM  Employees </span>
 <!--where-->
-<input type="text" name="param2" id="param2" />
+<input type="text" name="param2" id="param2" class="my-1"/>
 <span> ReportsTo  = @@VorgesetzeId ) </span><br /><span> END </span><br /><span> GO </span><br />
 </div>
 <input type="hidden" name="solutionString" id ="solutionString"/>
-<input type="submit" class="btn-sm btn-primary" value="Check"/>
+<input type="submit" class="btn btn-primary my-2" value="Check"/>
 </div>
 }
