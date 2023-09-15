@@ -1,0 +1,26 @@
+@model int
+@{
+	ViewData["Title"] = "Frage " + Model;
+}
+<h2>
+Eine Funktion schreiben, die die Anzahl der untergeordneten Mitarbeiter vom angegebenen Mitarbeiter zur?ck gibt.
+</h2>
+@using (Html.BeginForm("ValidateAnswers", "QuestionProgress", FormMethod.Get,new { onsubmit = "return validateForm(['FUNCTION','COUNT','WHERE'])", autocomplete = "off" }))
+{
+<div class="form-group">
+<div id="solutionText">
+<span> CREATE </span>
+<!--function-->
+<input type="text" name="param0" id="param0" />
+<span> fnAnzahlUntergeordnete  ( @@VorgesetzeId int  ) </span><br /><span> RETURNS  int </span><br /><span> AS  BEGIN </span><br /><span> RETURN  (  SELECT </span>
+<!--count-->
+<input type="text" name="param1" id="param1" />
+<span> (  EmployeeID  ) </span><br /><span> 		FROM  Employees </span>
+<!--where-->
+<input type="text" name="param2" id="param2" />
+<span> ReportsTo  = @@VorgesetzeId ) </span><br /><span> END </span><br /><span> GO </span><br />
+</div>
+<input type="hidden" name="solutionString" id ="solutionString"/>
+<input type="submit" class="btn-sm btn-primary" value="Check"/>
+</div>
+}

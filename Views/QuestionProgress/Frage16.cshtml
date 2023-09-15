@@ -1,0 +1,31 @@
+@model int
+@{
+	ViewData["Title"] = "Frage " + Model;
+}
+<h2>
+Liste aller Kunden (ID, Firmenname, Stadt, Land)
+sortiert nach Land aufsteigend, Stadt absteigend,
+Kontaktname aufsteigend
+</h2>
+@using (Html.BeginForm("ValidateAnswers", "QuestionProgress", FormMethod.Get,new { onsubmit = "return validateForm(['order','asc','desc','asc'])", autocomplete = "off" }))
+{
+<div class="form-group">
+<div id="solutionText">
+<span> select  *  from  [dbo]  .  [Customers] </span><br />
+<!--order-->
+<input type="text" name="param0" id="param0" />
+<span> by  [Country] </span>
+<!--asc-->
+<input type="text" name="param1" id="param1" />
+<span> ,  City </span>
+<!--desc-->
+<input type="text" name="param2" id="param2" />
+<span> ,  [ContactName] </span>
+<!--asc-->
+<input type="text" name="param3" id="param3" />
+<br />
+</div>
+<input type="hidden" name="solutionString" id ="solutionString"/>
+<input type="submit" class="btn-sm btn-primary" value="Check"/>
+</div>
+}

@@ -1,0 +1,26 @@
+@model int
+@{
+	ViewData["Title"] = "Frage " + Model;
+}
+<h2>
+Anzahl der Mitarbeiter, die 1993 angestellt wurden
+</h2>
+@using (Html.BeginForm("ValidateAnswers", "QuestionProgress", FormMethod.Get,new { onsubmit = "return validateForm(['count','from','YEAR'])", autocomplete = "off" }))
+{
+<div class="form-group">
+<div id="solutionText">
+<span> select </span>
+<!--count-->
+<input type="text" name="param0" id="param0" />
+<span> (  employeeID  )  Anzahl </span>
+<!--from-->
+<input type="text" name="param1" id="param1" />
+<span> Employees </span><br /><span> where </span>
+<!--year-->
+<input type="text" name="param2" id="param2" />
+<span> (  HireDate  )  =  1993 </span><br />
+</div>
+<input type="hidden" name="solutionString" id ="solutionString"/>
+<input type="submit" class="btn-sm btn-primary" value="Check"/>
+</div>
+}

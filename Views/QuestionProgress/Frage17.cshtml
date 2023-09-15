@@ -1,0 +1,27 @@
+@model int
+@{
+	ViewData["Title"] = "Frage " + Model;
+}
+<h2>
+Lieferanten Adressen aus USA alphabetisch nach Adress angeordnet auflisten
+gew?nschte Ausgabe: Address, City, Region, PostalCode, Country
+</h2>
+@using (Html.BeginForm("ValidateAnswers", "QuestionProgress", FormMethod.Get,new { onsubmit = "return validateForm(['where','like','asc'])", autocomplete = "off" }))
+{
+<div class="form-group">
+<div id="solutionText">
+<span> select  [Address]  ,  [City]  ,  [Region]  ,  [PostalCode]  ,  [Country]  from  [dbo]  .  [Suppliers] </span><br />
+<!--where-->
+<input type="text" name="param0" id="param0" />
+<span> Country </span>
+<!--like-->
+<input type="text" name="param1" id="param1" />
+<span> 'USA' </span><br /><span> order  by  Address </span>
+<!--asc-->
+<input type="text" name="param2" id="param2" />
+<br />
+</div>
+<input type="hidden" name="solutionString" id ="solutionString"/>
+<input type="submit" class="btn-sm btn-primary" value="Check"/>
+</div>
+}

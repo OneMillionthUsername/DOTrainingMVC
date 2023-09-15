@@ -1,5 +1,5 @@
 ﻿<div>
-    <form action="/QuestionGenerator" method="post" class="form-group">
+    <form action="/QuestionProgress/QuestionGenerator/" method="post" class="form-group">
         <div>
             <label class="col-form-label">Fragebeschreibung</label><br />
             <textarea class="form-control" name="questionDescription" id="questionDescription" rows="3"></textarea> <br />
@@ -14,4 +14,38 @@
         </div>
         <input type="submit" name="submit" id="submit" value="Generate" class="btn btn-primary" />
     </form>
+</div>
+<br />
+<a href="/QuestionProgress/Welcome" class="btn btn-primary mb-2 mr-2">Home</a>
+<br />
+
+<a href="#generatorHowTo" data-bs-toggle="collapse" class="btn btn-primary mb-2 mr-2">Help</a> 
+<div id="generatorHowTo" class="collapse">
+    <h3>How to use?</h3>
+
+    <p>
+        Im ersten Feld kommt deine "Frage" oder Anweisung rein.<br />
+        zB: <i>Zeige alle Kunden an.</i> <br />
+        Im zweiten kommt ein "geprüftes" SQL Script rein, also ein Script, das richtig geschrieben ist und funktionieren sollte.<br />
+        zB: <i>SELECT * FROM Costumers</i> <br />
+        Im letzten Feld kopiert man die Wörter aus dem Script raus, die man dann im Trainingsmodus <b><i>erraten</i></b> will. <br />
+        zB: <i>select, from</i> <br />
+    </p>
+    <p><b><i>WICHTIG:</i></b></p>
+    <p>
+        Es kann immer nur nach einem <b>GANZEN</b> Wort gesucht werden, also 'GROUP BY', 'NOT NULL' oder 'ORDER BY' müssen in 'GROUP' und 'BY' aufgeteilt werden.
+    </p>
+    <p>
+        Das Lösungswort muss <b><i>identisch</i></b> mit seinem Vorkommen im "Vorgabescript" sein.
+        Aliase sind nicht erlaubt. <i>'DESC'</i> ist nicht gleichbedeutend wie <i>'DESCENDING'</i> und <i>'='</i> nicht mit <i>'like'</i>.
+    </p>
+    <p>
+        Alle Suchbegriffe <b><i>müssen</i></b> durch einen Beistrich getrennt sein: 'SELECT, WHERE, FROM'. In diesem Beispiel wird ein Trainingsscript
+        generiert, worin die Begriffe 'SELECT, WHERE, FROM' gesucht werden. Nach dem letzten Wort kommt kein Zeichen mehr, auch kein Punkt.
+    </p>
+    <p>
+        Leerzeichen oder Groß/Kleinschreibung spielen keine Rolle.<br />
+        Operatoren werden einfach zusammenhängend und durch Beistriche getrennt eingegeben.<br />
+        zB: '>=, <=, !=, =, ___%' Jeder Operator nach dem Beistrich wird ein Feld erzeugen, das seine Vorgabe im Script als Antwort erwartet.
+    </p>
 </div>

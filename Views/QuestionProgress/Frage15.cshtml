@@ -1,0 +1,27 @@
+@model int
+@{
+	ViewData["Title"] = "Frage " + Model;
+}
+<h2>
+Werte der Produkte im Lager absteigend ausgeben
+Ausgabe: [ProductID],[ProductName],Wert
+</h2>
+@using (Html.BeginForm("ValidateAnswers", "QuestionProgress", FormMethod.Get,new { onsubmit = "return validateForm(['select','order','desc'])", autocomplete = "off" }))
+{
+<div class="form-group">
+<div id="solutionText">
+
+<!--select-->
+<input type="text" name="param0" id="param0" />
+<span> [ProductID]  ,  [ProductName]  ,  [UnitsInStock]*[UnitPrice]  as  Wert  from  [dbo]  .  [Products] </span><br />
+<!--order-->
+<input type="text" name="param1" id="param1" />
+<span> by  Wert </span>
+<!--desc-->
+<input type="text" name="param2" id="param2" />
+<br />
+</div>
+<input type="hidden" name="solutionString" id ="solutionString"/>
+<input type="submit" class="btn-sm btn-primary" value="Check"/>
+</div>
+}
