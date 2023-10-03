@@ -35,8 +35,6 @@ namespace DOTrainingMVC.Controllers
 
         public IActionResult Frage(bool? israndom, int qNum = 0)
         {
-            //jump to question5
-
             if (qNum > 0)
             {
                 QuestionNumber = qNum;
@@ -120,7 +118,7 @@ namespace DOTrainingMVC.Controllers
 
             bool setSpan = false;
             
-            //main loop - loop all scriptlines and manipulate them, create the HTML DOM.
+            //main loop - loop all scriptlines and and create the HTML DOM.
             for (int i = 0; i < scriptLines.Length; i++)
             {
                 char[] specialChars = { '(', ')', ';', ',', '.' };
@@ -175,6 +173,7 @@ namespace DOTrainingMVC.Controllers
                         solutionTermNumber++;
                         continue;
                     }
+                    //überspringe Leerwörter
                     if (string.IsNullOrEmpty(scriptLine[wordNumber]))
                     {
                         wordNumber++;
@@ -182,6 +181,7 @@ namespace DOTrainingMVC.Controllers
                     }
                     else
                     {
+                        //wenn @ vorhanden, füge ein zweites @ Zeichen um es zu escapen - "@@".
                         if (scriptLine[wordNumber].Contains('@'))
                         {
                             var index = scriptLine[wordNumber].IndexOf('@');
@@ -196,6 +196,7 @@ namespace DOTrainingMVC.Controllers
                                 setSpan = true;
                             }
                         }
+                        //sonst füge ein Wort hinzu
                         else
                         {
                             if (setSpan)
@@ -263,6 +264,12 @@ namespace DOTrainingMVC.Controllers
             }
             solutionAsParamsList = solutionAsParamsList.Substring(0, solutionAsParamsList.Length - 1) + "]";
             return solutionAsParamsList;
+        }
+
+        public IActionResult QuestionDelete(int qNum)
+        {
+            string viewName = $"Frage{QuestionNumber}";
+            return View();
         }
     }
 }
